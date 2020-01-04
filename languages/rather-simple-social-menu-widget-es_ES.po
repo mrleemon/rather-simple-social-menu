@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Really Simple Social Menu Widget\n"
-"POT-Creation-Date: 2016-12-26 11:57+0100\n"
-"PO-Revision-Date: 2016-12-26 11:58+0100\n"
+"Project-Id-Version: Rather Simple Social Menu Widget\n"
+"POT-Creation-Date: 2020-01-04 11:51+0100\n"
+"PO-Revision-Date: 2020-01-04 11:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: ca\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-WPHeader: really-simple-social-menu-widget.php\n"
+"X-Poedit-WPHeader: rather-simple-social-menu-widget.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
@@ -20,37 +20,37 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: really-simple-social-menu-widget.php:21
+#: rather-simple-social-menu-widget.php:21
 msgid "Add a custom social menu to your sidebar."
-msgstr "Afegeix un menú social personalitzat a la teva barra lateral."
+msgstr "Añade un menú social personalizado a tu barra lateral."
 
-#: really-simple-social-menu-widget.php:24
+#: rather-simple-social-menu-widget.php:24
 msgid "Custom Social Menu"
-msgstr "Menú social personalitzat"
+msgstr "Menú social personalizado"
 
-#: really-simple-social-menu-widget.php:138
+#: rather-simple-social-menu-widget.php:138
 #, php-format
 msgid "No menus have been created yet. <a href=\"%s\">Create some</a>."
 msgstr ""
 
-#: really-simple-social-menu-widget.php:142
+#: rather-simple-social-menu-widget.php:142
 msgid "Title:"
 msgstr ""
 
-#: really-simple-social-menu-widget.php:146
+#: rather-simple-social-menu-widget.php:146
 msgid "Select Menu:"
 msgstr ""
 
-#: really-simple-social-menu-widget.php:148
+#: rather-simple-social-menu-widget.php:148
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: really-simple-social-menu-widget.php:158
+#: rather-simple-social-menu-widget.php:158
 msgid "Edit Menu"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "Really Simple Social Menu Widget"
+msgid "Rather Simple Social Menu Widget"
 msgstr ""
 
 #. Description of the plugin/theme

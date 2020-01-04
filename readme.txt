@@ -1,4 +1,4 @@
-=== Really Simple Social Menu Widget ===
+=== Rather Simple Social Menu Widget ===
 Contributors: leemon
 Tags: social, icons, menu
 Requires at least: 4.0
@@ -21,7 +21,7 @@ This plugin is experimental and is provided with no support or warranty.
 
 == Copyright ==
 
-Really Simple Social Menu Widget is distributed under the terms of the GNU GPL
+Rather Simple Social Menu Widget is distributed under the terms of the GNU GPL
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
-Really Simple Social Menu Widget bundles the following third-party resources:
+Rather Simple Social Menu Widget bundles the following third-party resources:
 
 Socicon icon font
 License: SIL Open Font License 1.1

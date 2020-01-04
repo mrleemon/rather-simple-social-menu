@@ -1,27 +1,27 @@
 <?php
 /*
-Plugin Name: Really Simple Social Menu Widget
+Plugin Name: Rather Simple Social Menu Widget
 Plugin URI: 
 Description: A really simple social menu widget
 Author: Oscar Ciutat
 Version: 1.0
-Text Domain: really-simple-social-menu-widget
+Text Domain: rather-simple-social-menu-widget
 Author URI: http://oscarciutat.com/code/
 */
 
-class Really_Simple_Social_Menu_Widget extends WP_Widget {
+class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Sets up a new Social Menu widget instance.
 	 *
 	 */
 	public function __construct() {
-		load_plugin_textdomain( 'really-simple-social-menu-widget', '', dirname(plugin_basename( __FILE__ )) . '/languages/' );
+		load_plugin_textdomain( 'rather-simple-social-menu-widget', '', dirname(plugin_basename( __FILE__ )) . '/languages/' );
 		$widget_ops = array(
-			'description' => __( 'Add a custom social menu to your sidebar.', 'really-simple-social-menu-widget' ),
+			'description' => __( 'Add a custom social menu to your sidebar.', 'rather-simple-social-menu-widget' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'social_nav_menu', __( 'Custom Social Menu', 'really-simple-social-menu-widget' ), $widget_ops );
+		parent::__construct( 'social_nav_menu', __( 'Custom Social Menu', 'rather-simple-social-menu-widget' ), $widget_ops );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
@@ -31,7 +31,7 @@ class Really_Simple_Social_Menu_Widget extends WP_Widget {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style( 'socicon', plugins_url( '/assets/socicon/styles.css', __FILE__ ), array() );
-		wp_enqueue_style( 'really-simple-social-menu-widget-style', plugins_url( '/style.css', __FILE__ ), array( 'socicon' ) );
+		wp_enqueue_style( 'rather-simple-social-menu-widget-style', plugins_url( '/style.css', __FILE__ ), array( 'socicon' ) );
 	}
 
 	/**
@@ -164,4 +164,4 @@ class Really_Simple_Social_Menu_Widget extends WP_Widget {
 
 }
 
-add_action( 'widgets_init', function() { return register_widget( 'Really_Simple_Social_Menu_Widget' ); } );
+add_action( 'widgets_init', function() { return register_widget( 'Rather_Simple_Social_Menu_Widget' ); } );
