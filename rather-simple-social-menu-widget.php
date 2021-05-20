@@ -1,7 +1,8 @@
 <?php
 /*
 Plugin Name: Rather Simple Social Menu Widget
-Plugin URI: 
+Plugin URI:
+Update URI: false
 Description: A really simple social menu widget
 Author: Oscar Ciutat
 Version: 1.0
