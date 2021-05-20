@@ -3,11 +3,11 @@
 Plugin Name: Rather Simple Social Menu Widget
 Plugin URI:
 Update URI: false
-Description: A really simple social menu widget
-Author: Oscar Ciutat
 Version: 1.0
-Text Domain: rather-simple-social-menu-widget
+Author: Oscar Ciutat
 Author URI: http://oscarciutat.com/code/
+Description: A really simple social menu widget
+Text Domain: rather-simple-social-menu-widget
 */
 
 class Rather_Simple_Social_Menu_Widget extends WP_Widget {
