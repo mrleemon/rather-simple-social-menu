@@ -1,39 +1,45 @@
 <?php
-/*
-Plugin Name: Rather Simple Social Menu Widget
-Plugin URI:
-Update URI: false
-Version: 1.0
-Author: Oscar Ciutat
-Author URI: http://oscarciutat.com/code/
-Description: A really simple social menu widget
-Text Domain: rather-simple-social-menu-widget
-License: GPLv2 or later
+/**
+ * Plugin Name: Rather Simple Social Menu Widget
+ * Plugin URI:
+ * Update URI: false
+ * Version: 1.0
+ * Author: Oscar Ciutat
+ * Author URI: http://oscarciutat.com/code/
+ * Description: A really simple social menu widget
+ * Text Domain: rather-simple-social-menu-widget
+ * License: GPLv2 or later
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @package rather_simple_social_menu_widget
+ */
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License, version 2, as 
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
+/**
+ * Core class used to implement the widget.
+ *
+ * @see WP_Widget
+ */
 class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Sets up a new Social Menu widget instance.
-	 *
 	 */
 	public function __construct() {
-		load_plugin_textdomain( 'rather-simple-social-menu-widget', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'rather-simple-social-menu-widget', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		$widget_ops = array(
-			'description' => __( 'Add a custom social menu to your sidebar.', 'rather-simple-social-menu-widget' ),
+			'description'                 => __( 'Add a custom social menu to your sidebar.', 'rather-simple-social-menu-widget' ),
 			'customize_selective_refresh' => true,
 		);
 		parent::__construct( 'social_nav_menu', __( 'Custom Social Menu', 'rather-simple-social-menu-widget' ), $widget_ops );
@@ -42,9 +48,9 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Enqueues scripts and styles.
-	 *
 	 */
 	public function enqueue_scripts() {
+		// Load styles.
 		wp_enqueue_style( 'socicon', plugins_url( '/assets/socicon/styles.css', __FILE__ ), array() );
 		wp_enqueue_style( 'rather-simple-social-menu-widget-style', plugins_url( '/style.css', __FILE__ ), array( 'socicon' ) );
 	}
@@ -57,19 +63,21 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	 * @param array $instance Settings for the current Custom Menu widget instance.
 	 */
 	public function widget( $args, $instance ) {
-		// Get menu
+		// Get menu.
 		$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
 
-		if ( !$nav_menu )
+		if ( ! $nav_menu ) {
 			return;
+		}
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
 		echo $args['before_widget'];
 
-		if ( !empty($instance['title']) )
+		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . $instance['title'] . $args['after_title'];
+		}
 
 		$nav_menu_args = array(
 			'fallback_cb' => '',
@@ -77,14 +85,11 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 			'link_before' => '<span class="screen-reader-text">',
 			'link_after'  => '</span>',
 			'menu_class'  => 'social-links-menu',
-			'depth'		  => 1
+			'depth'       => 1,
 		);
 
 		/**
 		 * Filters the arguments for the Custom Menu widget.
-		 *
-		 * @since 4.2.0
-		 * @since 4.4.0 Added the `$instance` parameter.
 		 *
 		 * @param array    $nav_menu_args {
 		 *     An array of arguments passed to wp_nav_menu() to retrieve a custom menu.
@@ -103,9 +108,6 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Handles updating settings for the current Custom Menu widget instance.
-	 *
-	 * @since 3.0.0
-	 * @access public
 	 *
 	 * @param array $new_instance New settings for this instance as input by the user via
 	 *                            WP_Widget::form().
@@ -126,23 +128,25 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	/**
 	 * Outputs the settings form for the Custom Menu widget.
 	 *
-	 * @since 3.0.0
-	 * @access public
-	 *
 	 * @param array $instance Current settings.
 	 * @global WP_Customize_Manager $wp_customize
 	 */
 	public function form( $instance ) {
 		global $wp_customize;
-		$title = isset( $instance['title'] ) ? $instance['title'] : '';
+		$title    = isset( $instance['title'] ) ? $instance['title'] : '';
 		$nav_menu = isset( $instance['nav_menu'] ) ? $instance['nav_menu'] : '';
 
-		// Get menus
+		// Get menus.
 		$menus = wp_get_nav_menus();
 
 		// If no menus exists, direct the user to go and create some.
 		?>
-		<p class="nav-menu-widget-no-menus-message" <?php if ( ! empty( $menus ) ) { echo ' style="display:none" '; } ?>>
+		<p class="nav-menu-widget-no-menus-message" 
+		<?php
+		if ( ! empty( $menus ) ) {
+			echo ' style="display:none" '; }
+		?>
+		>
 			<?php
 			if ( $wp_customize instanceof WP_Customize_Manager ) {
 				$url = 'javascript: wp.customize.panel( "nav_menus" ).focus();';
@@ -150,16 +154,21 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 				$url = admin_url( 'nav-menus.php' );
 			}
 			?>
-			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_attr( $url ) ); ?>
+			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_url( $url ) ); ?>
 		</p>
-		<div class="nav-menu-widget-form-controls" <?php if ( empty( $menus ) ) { echo ' style="display:none" '; } ?>>
+		<div class="nav-menu-widget-form-controls" 
+		<?php
+		if ( empty( $menus ) ) {
+			echo ' style="display:none" '; }
+		?>
+		>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
-				<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
+				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'nav_menu' ); ?>"><?php _e( 'Select Menu:' ); ?></label>
-				<select id="<?php echo $this->get_field_id( 'nav_menu' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu' ); ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>"><?php _e( 'Select Menu:' ); ?></label>
+				<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu' ) ); ?>">
 					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
 					<?php foreach ( $menus as $menu ) : ?>
 						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu, $menu->term_id ); ?>>
@@ -169,8 +178,13 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 				</select>
 			</p>
 			<?php if ( $wp_customize instanceof WP_Customize_Manager ) : ?>
-				<p class="edit-selected-nav-menu" style="<?php if ( ! $nav_menu ) { echo 'display: none;'; } ?>">
-					<button type="button" class="button"><?php _e( 'Edit Menu' ) ?></button>
+				<p class="edit-selected-nav-menu" style="
+				<?php
+				if ( ! $nav_menu ) {
+					echo 'display: none;'; }
+				?>
+				">
+					<button type="button" class="button"><?php _e( 'Edit Menu' ); ?></button>
 				</p>
 			<?php endif; ?>
 		</div>
@@ -179,4 +193,9 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 }
 
-add_action( 'widgets_init', function() { return register_widget( 'Rather_Simple_Social_Menu_Widget' ); } );
+add_action(
+	'widgets_init',
+	function() {
+		return register_widget( 'Rather_Simple_Social_Menu_Widget' );
+	}
+);
