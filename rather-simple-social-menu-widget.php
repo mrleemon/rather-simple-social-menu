@@ -51,8 +51,18 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	 */
 	public function enqueue_scripts() {
 		// Load styles.
-		wp_enqueue_style( 'socicon', plugins_url( '/assets/socicon/styles.css', __FILE__ ), array() );
-		wp_enqueue_style( 'rather-simple-social-menu-widget-style', plugins_url( '/style.css', __FILE__ ), array( 'socicon' ) );
+		wp_enqueue_style(
+			'socicon',
+			plugins_url( '/assets/socicon/styles.css', __FILE__ ),
+			array(),
+			filemtime( plugin_dir_path( __FILE__ ) . '/assets/socicon/styles.css' )
+		);
+		wp_enqueue_style(
+			'rather-simple-social-menu-widget-style',
+			plugins_url( '/style.css', __FILE__ ),
+			array( 'socicon' ),
+			filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
+		);
 	}
 
 	/**
