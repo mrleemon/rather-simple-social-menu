@@ -4,10 +4,12 @@
  * Plugin URI:
  * Update URI: false
  * Version: 1.0
+ * Requires at least: 5.3
+ * Requires PHP: 7.0
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
- * Description: A really simple social menu widget
  * Text Domain: rather-simple-social-menu-widget
+ * Description: A really simple social menu widget
  * License: GPLv2 or later
  *
  * This program is free software; you can redistribute it and/or modify
