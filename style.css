@@ -1,4 +1,4 @@
-.social-links-menu a:before  {
+.social-links-menu a::before  {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	background: #777;
@@ -39,99 +39,99 @@
 	width: 1.8em;
 }
 
-.social-links-menu a[href*="digg.com"]:before {
+.social-links-menu a[href*="digg.com"]::before {
 	content: "\e025";
 }
 
-.social-links-menu a[href*="dribbble.com"]:before {
+.social-links-menu a[href*="dribbble.com"]::before {
 	content: "\e023";
 }
 
-.social-links-menu a[href*="facebook.com"]:before {
+.social-links-menu a[href*="facebook.com"]::before {
 	content: "\e041";
 }
 
-.social-links-menu a[href*="flickr.com"]:before {
+.social-links-menu a[href*="flickr.com"]::before {
 	content: "\e055";
 }
 
-.social-links-menu a[href*="foursquare.com"]:before {
+.social-links-menu a[href*="foursquare.com"]::before {
 	content: "\e044";
 }
 
-.social-links-menu a[href*="plus.google.com"]:before {
+.social-links-menu a[href*="plus.google.com"]::before {
 	content: "\e042";
 }
 
-.social-links-menu a[href*="github.com"]:before {
+.social-links-menu a[href*="github.com"]::before {
 	content: "\e030";
 }
 
-.social-links-menu a[href*="instagram.com"]:before {
+.social-links-menu a[href*="instagram.com"]::before {
 	content: "\e057";
 }
 
-.social-links-menu a[href*="linkedin.com"]:before {
+.social-links-menu a[href*="linkedin.com"]::before {
 	content: "\e049";
 }
 
-.social-links-menu a[href*="pinterest.com"]:before {
+.social-links-menu a[href*="pinterest.com"]::before {
 	content: "\e043";
 }
 
-.social-links-menu a[href*="getpocket.com"]:before {
+.social-links-menu a[href*="getpocket.com"]::before {
 	content: "\e01e";
 }
 
-.social-links-menu a[href*="reddit.com"]:before {
+.social-links-menu a[href*="reddit.com"]::before {
 	content: "\e022";
 }
 
-.social-links-menu a[href*="stumbleupon.com"]:before {
+.social-links-menu a[href*="stumbleupon.com"]::before {
 	content: "\e024";
 }
 
-.social-links-menu a[href*="tumblr.com"]:before {
+.social-links-menu a[href*="tumblr.com"]::before {
 	content: "\e059";
 }
 
-.social-links-menu a[href*="twitter.com"]:before {
+.social-links-menu a[href*="twitter.com"]::before {
 	content: "\e040";
 }
 
-.social-links-menu a[href*="vimeo.com"]:before {
+.social-links-menu a[href*="vimeo.com"]::before {
 	content: "\e052";
 }
 
-.social-links-menu a[href*="wordpress.com"]:before,
-.social-links-menu a[href*="wordpress.org"]:before {
+.social-links-menu a[href*="wordpress.com"]::before,
+.social-links-menu a[href*="wordpress.org"]::before {
 	content: "\e058";
 }
 
-.social-links-menu a[href*="youtube.com"]:before {
+.social-links-menu a[href*="youtube.com"]::before {
 	content: "\e051";
 }
 
-.social-links-menu a[href*="mailto:"]:before {
+.social-links-menu a[href*="mailto:"]::before {
 	content: "\e01f";
 }
 
-.social-links-menu a[href*="spotify.com"]:before {
+.social-links-menu a[href*="spotify.com"]::before {
 	content: "\e04e";
 }
 
-.social-links-menu a[href*="twitch.tv"]:before {
+.social-links-menu a[href*="twitch.tv"]::before {
 	content: "\e05a";
 }
 
-.social-links-menu a[href*="/feed/"]:before {
+.social-links-menu a[href*="/feed/"]::before {
 	content: "\e00b";
 }
 
-.social-links-menu a[href*="skype.com"]:before {
+.social-links-menu a[href*="skype.com"]::before {
 	content: "\e046";
 }
 
-.social-links-menu a[href*="issuu.com"]:before {
+.social-links-menu a[href*="issuu.com"]::before {
 	content: "\e087";
 }
