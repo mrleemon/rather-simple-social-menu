@@ -279,58 +279,77 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	);
 
 	/**
-	 * Social Icons URL mappings.
+	 * Social Icons – domain mappings.
+	 *
+	 * By default, each Icon ID is matched against a .com TLD. To override this behavior,
+	 * specify all the domains it covers (including the .com TLD too, if applicable).
 	 *
 	 * @var array
 	 */
 	public $social_icons_map = array(
-		'flickr.com'        => '500px',
-		'amazon.com'        => 'amazon',
-		'apple.com'         => 'apple',
-		'bandcamp.com'      => 'bandcamp',
-		'behance.net'       => 'behance',
-		'chain.com'         => 'chain',
-		'codepen.io'        => 'codepen',
-		'deviantart.com'    => 'deviantart',
-		'digg.com'          => 'digg',
-		'dribbble.com'      => 'dribbble',
-		'dropbox.com'       => 'dropbox',
-		'etsy.com'          => 'etsy',
-		'facebook.com'      => 'facebook',
-		'feed'              => 'feed',
-		'flickr.com'        => 'flickr',
-		'foursquare.com'    => 'foursquare',
-		'goodreads.com'     => 'goodreads',
-		'google.com'        => 'google',
-		'github.com'        => 'github',
-		'instagram.com'     => 'instagram',
-		'issuu.com'         => 'issuu',
-		'last.fm'           => 'lastfm',
-		'linkedin.com'      => 'linkedin',
-		'mailto:'           => 'mail',
-		'mastodon.social'   => 'mastodon',
-		'medium.com'        => 'medium',
-		'meetup.com'        => 'meetup',
-		'pinterest.com'     => 'pinterest',
-		'getpocket.com'     => 'pocket',
-		'reddit.com'        => 'reddit',
-		'skype.com'         => 'skype',
-		'slideshare.net'    => 'slideshare',
-		'snapchat.com'      => 'snapchat',
-		'soundcloud.com'    => 'soundcloud',
-		'spotify.com'       => 'spotify',
-		'stackexchange.com' => 'stackexchange',
-		'stackoverflow.com' => 'stackoverflow',
-		'threads.net'       => 'threads',
-		'tumblr.com'        => 'tumblr',
-		'twitch.tv'         => 'twitch',
-		'twitter.com'       => 'twitter',
-		'vimeo.com'         => 'vimeo',
-		'vk.com'            => 'vk',
-		'wordpress.com'     => 'wordpress',
-		'x.com'             => 'x',
-		'yelp.com'          => 'yelp',
-		'youtube.com'       => 'youtube',
+		'amazon'     => array(
+			'amazon.com',
+			'amazon.cn',
+			'amazon.in',
+			'amazon.fr',
+			'amazon.de',
+			'amazon.it',
+			'amazon.nl',
+			'amazon.es',
+			'amazon.co',
+			'amazon.ca',
+		),
+		'apple'      => array(
+			'apple.com',
+			'itunes.com',
+		),
+		'behance'    => array(
+			'behance.net',
+		),
+		'codepen'    => array(
+			'codepen.io',
+		),
+		'facebook'   => array(
+			'facebook.com',
+			'fb.me',
+		),
+		'feed'       => array(
+			'feed',
+		),
+		'lastfm'     => array(
+			'last.fm',
+		),
+		'mail'       => array(
+			'mailto:',
+		),
+		'mastodon'   => array(
+			'mastodon.social',
+			'pawoo.net',
+			'mstdn.jp',
+			'mastodon.cloud',
+			'mastodon.online',
+			'counter.social',
+			'mstdn.social',
+			'mas.to',
+			'mastodon.world',
+			'gc2.jp',
+		),
+		'pocket'     => array(
+			'getpocket.com',
+		),
+		'slideshare' => array(
+			'slideshare.net',
+		),
+		'threads'    => array(
+			'threads.net',
+		),
+		'twitch'     => array(
+			'twitch.tv',
+		),
+		'wordpress'  => array(
+			'wordpress.com',
+			'wordpress.org',
+		),
 	);
 
 	/**
@@ -498,19 +517,37 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Detects the social network from a URL and returns the SVG code for its icon.
+	 * Change SVG icon inside social links menu if there is a supported URL.
 	 */
 	public function nav_menu_social_icons( $item_output, $item, $depth, $args ) {
-
-		// Change SVG icon inside social links menu if there is supported URL.
 		if ( 'social-links-widget' === $args->theme_location ) {
-			foreach ( $this->social_icons_map as $attr => $value ) {
-				if ( false !== strpos( $item_output, $attr ) ) {
-					$item_output = str_replace( $args->link_after, '</span>' . $this->get_svg( $value, 24 ), $item_output );
-				}
+			$svg = $this->get_social_link_svg( $item->url, 24 );
+			if ( ! empty( $svg ) ) {
+				$item_output = str_replace( $args->link_after, '</span>' . $svg, $item_output );
 			}
 		}
 		return $item_output;
+	}
+
+	/**
+	 * Detects the social network from a URL and returns the SVG code for its icon.
+	 */
+	public function get_social_link_svg( $uri, $size ) {
+		$regex_map    = array();
+		$map          = $this->social_icons_map;
+		$social_icons = $this->social_icons;
+		foreach ( array_keys( $social_icons ) as $icon ) {
+			$domains            = array_key_exists( $icon, $map ) ? $map[ $icon ] : array( sprintf( '%s.com', $icon ) );
+			$domains            = array_map( 'trim', $domains ); // Remove leading/trailing spaces, to prevent regex from failing to match.
+			$domains            = array_map( 'preg_quote', $domains );
+			$regex_map[ $icon ] = sprintf( '/(%s)/i', implode( '|', $domains ) );
+		}
+		foreach ( $regex_map as $icon => $regex ) {
+			if ( preg_match( $regex, $uri ) ) {
+				return $this->get_svg( $icon, $size );
+			}
+		}
+		return null;
 	}
 
 	/**
