@@ -279,6 +279,61 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	);
 
 	/**
+	 * Social Icons URL mappings.
+	 *
+	 * @var array
+	 */
+	public $social_icons_map = array(
+		'flickr.com'        => '500px',
+		'amazon.com'        => 'amazon',
+		'apple.com'         => 'apple',
+		'bandcamp.com'      => 'bandcamp',
+		'behance.net'       => 'behance',
+		'chain.com'         => 'chain',
+		'codepen.io'        => 'codepen',
+		'deviantart.com'    => 'deviantart',
+		'digg.com'          => 'digg',
+		'dribbble.com'      => 'dribbble',
+		'dropbox.com'       => 'dropbox',
+		'etsy.com'          => 'etsy',
+		'facebook.com'      => 'facebook',
+		'feed'              => 'feed',
+		'flickr.com'        => 'flickr',
+		'foursquare.com'    => 'foursquare',
+		'goodreads.com'     => 'goodreads',
+		'google.com'        => 'google',
+		'github.com'        => 'github',
+		'instagram.com'     => 'instagram',
+		'issuu.com'         => 'issuu',
+		'last.fm'           => 'lastfm',
+		'linkedin.com'      => 'linkedin',
+		'mailto:'           => 'mail',
+		'mastodon.social'   => 'mastodon',
+		'medium.com'        => 'medium',
+		'meetup.com'        => 'meetup',
+		'pinterest.com'     => 'pinterest',
+		'getpocket.com'     => 'pocket',
+		'reddit.com'        => 'reddit',
+		'skype.com'         => 'skype',
+		'slideshare.net'    => 'slideshare',
+		'snapchat.com'      => 'snapchat',
+		'soundcloud.com'    => 'soundcloud',
+		'spotify.com'       => 'spotify',
+		'stackexchange.com' => 'stackexchange',
+		'stackoverflow.com' => 'stackoverflow',
+		'threads.net'       => 'threads',
+		'tumblr.com'        => 'tumblr',
+		'twitch.tv'         => 'twitch',
+		'twitter.com'       => 'twitter',
+		'vimeo.com'         => 'vimeo',
+		'vk.com'            => 'vk',
+		'wordpress.com'     => 'wordpress',
+		'x.com'             => 'x',
+		'yelp.com'          => 'yelp',
+		'youtube.com'       => 'youtube',
+	);
+
+	/**
 	 * Sets up a new Social Menu widget instance.
 	 */
 	public function __construct() {
@@ -447,59 +502,9 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	 */
 	public function nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 
-		$social_icons = array(
-			'flickr.com'        => '500px',
-			'amazon.com'        => 'amazon',
-			'apple.com'         => 'apple',
-			'bandcamp.com'      => 'bandcamp',
-			'behance.net'       => 'behance',
-			'chain.com'         => 'chain',
-			'codepen.io'        => 'codepen',
-			'deviantart.com'    => 'deviantart',
-			'digg.com'          => 'digg',
-			'dribbble.com'      => 'dribbble',
-			'dropbox.com'       => 'dropbox',
-			'etsy.com'          => 'etsy',
-			'facebook.com'      => 'facebook',
-			'feed'              => 'feed',
-			'flickr.com'        => 'flickr',
-			'foursquare.com'    => 'foursquare',
-			'goodreads.com'     => 'goodreads',
-			'google.com'        => 'google',
-			'github.com'        => 'github',
-			'instagram.com'     => 'instagram',
-			'issuu.com'         => 'issuu',
-			'last.fm'           => 'lastfm',
-			'linkedin.com'      => 'linkedin',
-			'mailto:'           => 'mail',
-			'mastodon.social'   => 'mastodon',
-			'medium.com'        => 'medium',
-			'meetup.com'        => 'meetup',
-			'pinterest.com'     => 'pinterest',
-			'getpocket.com'     => 'pocket',
-			'reddit.com'        => 'reddit',
-			'skype.com'         => 'skype',
-			'slideshare.net'    => 'slideshare',
-			'snapchat.com'      => 'snapchat',
-			'soundcloud.com'    => 'soundcloud',
-			'spotify.com'       => 'spotify',
-			'stackexchange.com' => 'stackexchange',
-			'stackoverflow.com' => 'stackoverflow',
-			'threads.net'       => 'threads',
-			'tumblr.com'        => 'tumblr',
-			'twitch.tv'         => 'twitch',
-			'twitter.com'       => 'twitter',
-			'vimeo.com'         => 'vimeo',
-			'vk.com'            => 'vk',
-			'wordpress.com'     => 'wordpress',
-			'x.com'             => 'x',
-			'yelp.com'          => 'yelp',
-			'youtube.com'       => 'youtube',
-		);
-
 		// Change SVG icon inside social links menu if there is supported URL.
 		if ( 'social-links-widget' === $args->theme_location ) {
-			foreach ( $social_icons as $attr => $value ) {
+			foreach ( $this->social_icons_map as $attr => $value ) {
 				if ( false !== strpos( $item_output, $attr ) ) {
 					$item_output = str_replace( $args->link_after, '</span>' . $this->get_svg( $value, 24 ), $item_output );
 				}
