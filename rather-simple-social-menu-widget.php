@@ -501,7 +501,7 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 				$url = admin_url( 'nav-menus.php' );
 			}
 			?>
-			<?php echo sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_url( $url ) ); ?>
+			<?php printf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_url( $url ) ); ?>
 		</p>
 		<div class="nav-menu-widget-form-controls" 
 		<?php
@@ -540,6 +540,11 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Change SVG icon inside social links menu if there is a supported URL.
+	 *
+	 * @param string   $item_output The menu item’s starting HTML output.
+	 * @param WP_Post  $item        Menu item data object.
+	 * @param int      $depth       Depth of menu item. Used for padding.
+	 * @param stdClass $args        An object of wp_nav_menu() arguments.
 	 */
 	public function nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 		if ( 'social-links-widget' === $args->theme_location ) {
@@ -553,6 +558,9 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Detects the social network from a URL and returns the SVG code for its icon.
+	 *
+	 * @param string $uri  Social link.
+	 * @param int    $size The icon size in pixels.
 	 */
 	public function get_social_link_svg( $uri, $size ) {
 		$regex_map    = array();
@@ -574,6 +582,9 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 
 	/**
 	 * Gets the SVG code for a given icon.
+	 *
+	 * @param string $icon  The name of the icon.
+	 * @param int    $size  The icon size in pixels.
 	 */
 	public function get_svg( $icon, $size ) {
 		$arr = $this->social_icons;
@@ -586,12 +597,11 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 		}
 		return null;
 	}
-
 }
 
 add_action(
 	'widgets_init',
-	function() {
+	function () {
 		return register_widget( 'Rather_Simple_Social_Menu_Widget' );
 	}
 );
