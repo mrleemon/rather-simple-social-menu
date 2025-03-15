@@ -9,6 +9,7 @@
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
  * Text Domain: rather-simple-social-menu-widget
+ * Domain Path: /languages
  * Description: A really simple social menu widget
  * License: GPLv2 or later
  *
