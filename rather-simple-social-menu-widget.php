@@ -384,7 +384,6 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	 * Sets up a new Social Menu widget instance.
 	 */
 	public function __construct() {
-		load_plugin_textdomain( 'rather-simple-social-menu-widget', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		$widget_ops = array(
 			'description'                 => __( 'Add a custom social menu to your sidebar.', 'rather-simple-social-menu-widget' ),
 			'customize_selective_refresh' => true,
