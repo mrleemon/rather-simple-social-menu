@@ -1,47 +1,28 @@
 <?php
 /**
- * Plugin Name: Rather Simple Social Menu Widget
- * Plugin URI:
- * Update URI: false
- * Version: 2.0
- * Requires at least: 5.3
- * Requires PHP: 7.4
- * Author: Oscar Ciutat
- * Author URI: http://oscarciutat.com/code/
- * Text Domain: rather-simple-social-menu-widget
- * Domain Path: /languages
- * Description: A really simple social menu widget
- * License: GPLv2 or later
+ * SVG Icons class
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2, as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @package rather_simple_social_menu_widget
+ * @package rather_simple_social_menu
  */
 
 /**
- * Core class used to implement the widget.
+ * This class is in charge of displaying SVG icons across the site.
  *
- * @see WP_Widget
+ * Place each <svg> source on its own array key, without adding the
+ * both `width` and `height` attributes, since these are added dnamically,
+ * before rendering the SVG code.
+ *
+ * All icons are assumed to have equal width and height, hence the option
+ * to only specify a `$size` parameter in the svg methods.
  */
-class Rather_Simple_Social_Menu_Widget extends WP_Widget {
+class Plugin_SVG_Icons {
 
 	/**
 	 * Social Icons – svg sources.
 	 *
 	 * @var array
 	 */
-	public $social_icons = array(
+	public static $svg_icons = array(
 		'500px'         => '
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M6.94026,15.1412c.00437.01213.108.29862.168.44064a6.55008,6.55008,0,1,0,6.03191-9.09557,6.68654,6.68654,0,0,0-2.58357.51467A8.53914,8.53914,0,0,0,8.21268,8.61344L8.209,8.61725V3.22948l9.0504-.00008c.32934-.0036.32934-.46353.32934-.61466s0-.61091-.33035-.61467L7.47248,2a.43.43,0,0,0-.43131.42692v7.58355c0,.24466.30476.42131.58793.4819.553.11812.68074-.05864.81617-.2457l.018-.02481A10.52673,10.52673,0,0,1,9.32258,9.258a5.35268,5.35268,0,1,1,7.58985,7.54976,5.417,5.417,0,0,1-3.80867,1.56365,5.17483,5.17483,0,0,1-2.69822-.74478l.00342-4.61111a2.79372,2.79372,0,0,1,.71372-1.78792,2.61611,2.61611,0,0,1,1.98282-.89477,2.75683,2.75683,0,0,1,1.95525.79477,2.66867,2.66867,0,0,1,.79656,1.909,2.724,2.724,0,0,1-2.75849,2.748,4.94651,4.94651,0,0,1-.86254-.13719c-.31234-.093-.44519.34058-.48892.48349-.16811.54966.08453.65862.13687.67489a3.75751,3.75751,0,0,0,1.25234.18375,3.94634,3.94634,0,1,0-2.82444-6.742,3.67478,3.67478,0,0,0-1.13028,2.584l-.00041.02323c-.0035.11667-.00579,2.881-.00644,3.78811l-.00407-.00451a6.18521,6.18521,0,0,1-1.0851-1.86092c-.10544-.27856-.34358-.22925-.66857-.12917-.14192.04372-.57386.17677-.47833.489Zm4.65165-1.08338a.51346.51346,0,0,0,.19513.31818l.02276.022a.52945.52945,0,0,0,.3517.18416.24242.24242,0,0,0,.16577-.0611c.05473-.05082.67382-.67812.73287-.738l.69041.68819a.28978.28978,0,0,0,.21437.11032.53239.53239,0,0,0,.35708-.19486c.29792-.30419.14885-.46821.07676-.54751l-.69954-.69975.72952-.73469c.16-.17311.01874-.35708-.12218-.498-.20461-.20461-.402-.25742-.52855-.14083l-.7254.72665-.73354-.73375a.20128.20128,0,0,0-.14179-.05695.54135.54135,0,0,0-.34379.19648c-.22561.22555-.274.38149-.15656.5059l.73374.7315-.72942.73072A.26589.26589,0,0,0,11.59191,14.05782Zm1.59866-9.915A8.86081,8.86081,0,0,0,9.854,4.776a.26169.26169,0,0,0-.16938.22759.92978.92978,0,0,0,.08619.42094c.05682.14524.20779.531.50006.41955a8.40969,8.40969,0,0,1,2.91968-.55484,7.87875,7.87875,0,0,1,3.086.62286,8.61817,8.61817,0,0,1,2.30562,1.49315.2781.2781,0,0,0,.18318.07586c.15529,0,.30425-.15253.43167-.29551.21268-.23861.35873-.4369.1492-.63538a8.50425,8.50425,0,0,0-2.62312-1.694A9.0177,9.0177,0,0,0,13.19058,4.14283ZM19.50945,18.6236h0a.93171.93171,0,0,0-.36642-.25406.26589.26589,0,0,0-.27613.06613l-.06943.06929A7.90606,7.90606,0,0,1,7.60639,18.505a7.57284,7.57284,0,0,1-1.696-2.51537,8.58715,8.58715,0,0,1-.5147-1.77754l-.00871-.04864c-.04939-.25873-.28755-.27684-.62981-.22448-.14234.02178-.5755.088-.53426.39969l.001.00712a9.08807,9.08807,0,0,0,15.406,4.99094c.00193-.00192.04753-.04718.0725-.07436C19.79425,19.16234,19.87422,18.98728,19.50945,18.6236Z"></path>
@@ -65,6 +46,11 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 		'behance'       => '
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M7.799,5.698c0.589,0,1.12,0.051,1.606,0.156c0.482,0.102,0.894,0.273,1.241,0.507c0.344,0.235,0.612,0.546,0.804,0.938 c0.188,0.387,0.281,0.871,0.281,1.443c0,0.619-0.141,1.137-0.421,1.551c-0.284,0.413-0.7,0.751-1.255,1.014 c0.756,0.218,1.317,0.601,1.689,1.146c0.374,0.549,0.557,1.205,0.557,1.975c0,0.623-0.12,1.161-0.359,1.612 c-0.241,0.457-0.569,0.828-0.973,1.114c-0.408,0.288-0.876,0.5-1.399,0.637C9.052,17.931,8.514,18,7.963,18H2V5.698H7.799 M7.449,10.668c0.481,0,0.878-0.114,1.192-0.345c0.311-0.228,0.463-0.603,0.463-1.119c0-0.286-0.051-0.523-0.152-0.707 C8.848,8.315,8.711,8.171,8.536,8.07C8.362,7.966,8.166,7.894,7.94,7.854c-0.224-0.044-0.457-0.06-0.697-0.06H4.709v2.874H7.449z M7.6,15.905c0.267,0,0.521-0.024,0.759-0.077c0.243-0.053,0.457-0.137,0.637-0.261c0.182-0.12,0.332-0.283,0.441-0.491 C9.547,14.87,9.6,14.602,9.6,14.278c0-0.633-0.18-1.084-0.533-1.357c-0.356-0.27-0.83-0.404-1.413-0.404H4.709v3.388L7.6,15.905z M16.162,15.864c0.367,0.358,0.897,0.538,1.583,0.538c0.493,0,0.92-0.125,1.277-0.374c0.354-0.248,0.571-0.514,0.654-0.79h2.155 c-0.347,1.072-0.872,1.838-1.589,2.299C19.534,18,18.67,18.23,17.662,18.23c-0.701,0-1.332-0.113-1.899-0.337 c-0.567-0.227-1.041-0.544-1.439-0.958c-0.389-0.415-0.689-0.907-0.904-1.484c-0.213-0.574-0.32-1.21-0.32-1.899 c0-0.666,0.11-1.288,0.329-1.863c0.222-0.577,0.529-1.075,0.933-1.492c0.406-0.42,0.885-0.751,1.444-0.994 c0.558-0.241,1.175-0.363,1.857-0.363c0.754,0,1.414,0.145,1.98,0.44c0.563,0.291,1.026,0.686,1.389,1.181 c0.363,0.493,0.622,1.057,0.783,1.69c0.16,0.632,0.217,1.292,0.171,1.983h-6.428C15.557,14.84,15.795,15.506,16.162,15.864 M18.973,11.184c-0.291-0.321-0.783-0.496-1.384-0.496c-0.39,0-0.714,0.066-0.973,0.2c-0.254,0.132-0.461,0.297-0.621,0.491 c-0.157,0.197-0.265,0.405-0.328,0.628c-0.063,0.217-0.101,0.413-0.111,0.587h3.98C19.478,11.969,19.265,11.509,18.973,11.184z M15.057,7.738h4.985V6.524h-4.985L15.057,7.738z"></path>
+</svg>',
+
+		'bluesky'       => '
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+	<path d="M6.3,4.2c2.3,1.7,4.8,5.3,5.7,7.2.9-1.9,3.4-5.4,5.7-7.2,1.7-1.3,4.3-2.2,4.3.9s-.4,5.2-.6,5.9c-.7,2.6-3.3,3.2-5.6,2.8,4,.7,5.1,3,2.9,5.3-5,5.2-6.7-2.8-6.7-2.8,0,0-1.7,8-6.7,2.8-2.2-2.3-1.2-4.6,2.9-5.3-2.3.4-4.9-.3-5.6-2.8-.2-.7-.6-5.3-.6-5.9,0-3.1,2.7-2.1,4.3-.9h0Z"></path>
 </svg>',
 
 		'chain'         => '
@@ -187,6 +173,11 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
     <path d="M12.289,2C6.617,2,3.606,5.648,3.606,9.622c0,1.846,1.025,4.146,2.666,4.878c0.25,0.111,0.381,0.063,0.439-0.169 c0.044-0.175,0.267-1.029,0.365-1.428c0.032-0.128,0.017-0.237-0.091-0.362C6.445,11.911,6.01,10.75,6.01,9.668 c0-2.777,2.194-5.464,5.933-5.464c3.23,0,5.49,2.108,5.49,5.122c0,3.407-1.794,5.768-4.13,5.768c-1.291,0-2.257-1.021-1.948-2.277 c0.372-1.495,1.089-3.112,1.089-4.191c0-0.967-0.542-1.775-1.663-1.775c-1.319,0-2.379,1.309-2.379,3.059 c0,1.115,0.394,1.869,0.394,1.869s-1.302,5.279-1.54,6.261c-0.405,1.666,0.053,4.368,0.094,4.604 c0.021,0.126,0.167,0.169,0.25,0.063c0.129-0.165,1.699-2.419,2.142-4.051c0.158-0.59,0.817-2.995,0.817-2.995 c0.43,0.784,1.681,1.446,3.013,1.446c3.963,0,6.822-3.494,6.822-7.833C20.394,5.112,16.849,2,12.289,2"></path>
 </svg>',
 
+		'pixelfed'      => '
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+	<path d="m12 2q-2.7059 0-5.0588 1.3647-2.2588 1.3412-3.5765 3.6-1.3647 2.3294-1.3647 5.0471 0 2.7176 1.3647 5.0471 1.3176 2.2588 3.5765 3.5765 2.3529 1.3647 5.0588 1.3647 2.7059 0 5.0588-1.3647 2.2588-1.3176 3.5765-3.5765 1.3647-2.3294 1.3647-5.0471 0-2.7176-1.3647-5.0471-1.3176-2.2588-3.5765-3.6-2.3529-1.3647-5.0588-1.3647zm-1.6 6.0941h2.6353q0.84706 0 1.5647 0.41176 0.71765 0.41176 1.1412 1.1059 0.42353 0.69412 0.42353 1.5294 0 0.8353-0.42353 1.5294-0.42353 0.69412-1.1412 1.1059t-1.5647 0.41176h-1.8353l-2.6118 2.4941v-6.8235q0-0.72941 0.52941-1.2471 0.52941-0.51765 1.2824-0.51765z"></path>
+</svg>',
+
 		'pocket'        => '
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M21.927,4.194C21.667,3.48,20.982,3,20.222,3h-0.01h-1.721H3.839C3.092,3,2.411,3.47,2.145,4.17 C2.066,4.378,2.026,4.594,2.026,4.814v6.035l0.069,1.2c0.29,2.73,1.707,5.115,3.899,6.778c0.039,0.03,0.079,0.059,0.119,0.089 l0.025,0.018c1.175,0.859,2.491,1.441,3.91,1.727c0.655,0.132,1.325,0.2,1.991,0.2c0.615,0,1.232-0.057,1.839-0.17 c0.073-0.014,0.145-0.028,0.219-0.044c0.02-0.004,0.042-0.012,0.064-0.023c1.359-0.297,2.621-0.864,3.753-1.691l0.025-0.018 c0.04-0.029,0.08-0.058,0.119-0.089c2.192-1.664,3.609-4.049,3.898-6.778l0.069-1.2V4.814C22.026,4.605,22,4.398,21.927,4.194z M17.692,10.481l-4.704,4.512c-0.266,0.254-0.608,0.382-0.949,0.382c-0.342,0-0.684-0.128-0.949-0.382l-4.705-4.512 C5.838,9.957,5.82,9.089,6.344,8.542c0.524-0.547,1.392-0.565,1.939-0.04l3.756,3.601l3.755-3.601 c0.547-0.524,1.415-0.506,1.939,0.04C18.256,9.089,18.238,9.956,17.692,10.481z"></path>
@@ -257,11 +248,6 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
     <path d="M16.499,8.089h-1.636v4.91h1.636V8.089z M12,8.089h-1.637v4.91H12V8.089z M4.228,3.178L3,6.451v13.092h4.499V22h2.456 l2.454-2.456h3.681L21,14.636V3.178H4.228z M19.364,13.816l-2.864,2.865H12l-2.453,2.453V16.68H5.863V4.814h13.501V13.816z"></path>
 </svg>',
 
-		'twitter'       => '
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M22.23,5.924c-0.736,0.326-1.527,0.547-2.357,0.646c0.847-0.508,1.498-1.312,1.804-2.27 c-0.793,0.47-1.671,0.812-2.606,0.996C18.324,4.498,17.257,4,16.077,4c-2.266,0-4.103,1.837-4.103,4.103 c0,0.322,0.036,0.635,0.106,0.935C8.67,8.867,5.647,7.234,3.623,4.751C3.27,5.357,3.067,6.062,3.067,6.814 c0,1.424,0.724,2.679,1.825,3.415c-0.673-0.021-1.305-0.206-1.859-0.513c0,0.017,0,0.034,0,0.052c0,1.988,1.414,3.647,3.292,4.023 c-0.344,0.094-0.707,0.144-1.081,0.144c-0.264,0-0.521-0.026-0.772-0.074c0.522,1.63,2.038,2.816,3.833,2.85 c-1.404,1.1-3.174,1.756-5.096,1.756c-0.331,0-0.658-0.019-0.979-0.057c1.816,1.164,3.973,1.843,6.29,1.843 c7.547,0,11.675-6.252,11.675-11.675c0-0.178-0.004-0.355-0.012-0.531C20.985,7.47,21.68,6.747,22.23,5.924z"></path>
-</svg>',
-
 		'vimeo'         => '
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M22.396,7.164c-0.093,2.026-1.507,4.799-4.245,8.32C15.322,19.161,12.928,21,10.97,21c-1.214,0-2.24-1.119-3.079-3.359 c-0.56-2.053-1.119-4.106-1.68-6.159C5.588,9.243,4.921,8.122,4.206,8.122c-0.156,0-0.701,0.328-1.634,0.98L1.594,7.841 c1.027-0.902,2.04-1.805,3.037-2.708C6.001,3.95,7.03,3.327,7.715,3.264c1.619-0.156,2.616,0.951,2.99,3.321 c0.404,2.557,0.685,4.147,0.841,4.769c0.467,2.121,0.981,3.181,1.542,3.181c0.435,0,1.09-0.688,1.963-2.065 c0.871-1.376,1.338-2.422,1.401-3.142c0.125-1.187-0.343-1.782-1.401-1.782c-0.498,0-1.012,0.115-1.541,0.341 c1.023-3.35,2.977-4.977,5.862-4.884C21.511,3.066,22.52,4.453,22.396,7.164z"></path>
@@ -300,299 +286,21 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 	);
 
 	/**
-	 * Social Icons – domain mappings.
-	 *
-	 * By default, each Icon ID is matched against a .com TLD. To override this behavior,
-	 * specify all the domains it covers (including the .com TLD too, if applicable).
-	 *
-	 * @var array
-	 */
-	public $social_icons_map = array(
-		'amazon'     => array(
-			'amazon.com',
-			'amazon.cn',
-			'amazon.in',
-			'amazon.fr',
-			'amazon.de',
-			'amazon.it',
-			'amazon.nl',
-			'amazon.es',
-			'amazon.co',
-			'amazon.ca',
-		),
-		'apple'      => array(
-			'apple.com',
-			'itunes.com',
-		),
-		'behance'    => array(
-			'behance.net',
-		),
-		'codepen'    => array(
-			'codepen.io',
-		),
-		'facebook'   => array(
-			'facebook.com',
-			'fb.me',
-		),
-		'feed'       => array(
-			'feed',
-		),
-		'lastfm'     => array(
-			'last.fm',
-		),
-		'mail'       => array(
-			'mailto:',
-		),
-		'mastodon'   => array(
-			'mastodon.social',
-			'pawoo.net',
-			'mstdn.jp',
-			'mastodon.cloud',
-			'mastodon.online',
-			'counter.social',
-			'mstdn.social',
-			'mas.to',
-			'mastodon.world',
-			'gc2.jp',
-		),
-		'pocket'     => array(
-			'getpocket.com',
-		),
-		'slideshare' => array(
-			'slideshare.net',
-		),
-		'telegram'   => array(
-			'telegram.me',
-		),
-		'threads'    => array(
-			'threads.net',
-		),
-		'twitch'     => array(
-			'twitch.tv',
-		),
-		'whatsapp'   => array(
-			'whatsapp.com',
-			'wa.me',
-		),
-		'wordpress'  => array(
-			'wordpress.com',
-			'wordpress.org',
-		),
-	);
-
-	/**
-	 * Sets up a new Social Menu widget instance.
-	 */
-	public function __construct() {
-		$widget_ops = array(
-			'description'                 => __( 'Add a custom social menu to your sidebar.', 'rather-simple-social-menu-widget' ),
-			'customize_selective_refresh' => true,
-		);
-		parent::__construct( 'social_nav_menu', __( 'Custom Social Menu', 'rather-simple-social-menu-widget' ), $widget_ops );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_filter( 'walker_nav_menu_start_el', array( $this, 'nav_menu_social_icons' ), 10, 4 );
-	}
-
-	/**
-	 * Enqueues scripts and styles.
-	 */
-	public function enqueue_scripts() {
-		// Load styles.
-		wp_enqueue_style(
-			'rather-simple-social-menu-widget-style',
-			plugins_url( '/style.css', __FILE__ ),
-			array(),
-			filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
-		);
-	}
-
-	/**
-	 * Outputs the content for the current Social Menu widget instance.
-	 *
-	 * @param array $args     Display arguments including 'before_title', 'after_title',
-	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Custom Menu widget instance.
-	 */
-	public function widget( $args, $instance ) {
-		// Get menu.
-		$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
-
-		if ( ! $nav_menu ) {
-			return;
-		}
-
-		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
-		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
-
-		echo $args['before_widget'];
-
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . $instance['title'] . $args['after_title'];
-		}
-
-		$nav_menu_args = array(
-			'theme_location' => 'social-links-widget',
-			'menu'           => $nav_menu,
-			'link_before'    => '<span class="screen-reader-text">',
-			'link_after'     => '</span>',
-			'menu_class'     => 'social-links-menu',
-			'depth'          => 1,
-			'fallback_cb'    => '',
-		);
-
-		/**
-		 * Filters the arguments for the Custom Menu widget.
-		 *
-		 * @param array    $nav_menu_args {
-		 *     An array of arguments passed to wp_nav_menu() to retrieve a custom menu.
-		 *
-		 *     @type callable|bool $fallback_cb Callback to fire if the menu doesn't exist. Default empty.
-		 *     @type mixed         $menu        Menu ID, slug, or name.
-		 * }
-		 * @param WP_Term  $nav_menu      Nav menu object for the current menu.
-		 * @param array    $args          Display arguments for the current widget.
-		 * @param array    $instance      Array of settings for the current widget.
-		 */
-		wp_nav_menu( apply_filters( 'widget_nav_menu_args', $nav_menu_args, $nav_menu, $args, $instance ) );
-
-		echo $args['after_widget'];
-	}
-
-	/**
-	 * Handles updating settings for the current Custom Menu widget instance.
-	 *
-	 * @param array $new_instance New settings for this instance as input by the user via
-	 *                            WP_Widget::form().
-	 * @param array $old_instance Old settings for this instance.
-	 * @return array Updated settings to save.
-	 */
-	public function update( $new_instance, $old_instance ) {
-		$instance = array();
-		if ( ! empty( $new_instance['title'] ) ) {
-			$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		}
-		if ( ! empty( $new_instance['nav_menu'] ) ) {
-			$instance['nav_menu'] = (int) $new_instance['nav_menu'];
-		}
-		return $instance;
-	}
-
-	/**
-	 * Outputs the settings form for the Custom Menu widget.
-	 *
-	 * @param array $instance Current settings.
-	 * @global WP_Customize_Manager $wp_customize
-	 */
-	public function form( $instance ) {
-		global $wp_customize;
-		$title    = isset( $instance['title'] ) ? $instance['title'] : '';
-		$nav_menu = isset( $instance['nav_menu'] ) ? $instance['nav_menu'] : '';
-
-		// Get menus.
-		$menus = wp_get_nav_menus();
-
-		// If no menus exists, direct the user to go and create some.
-		?>
-		<p class="nav-menu-widget-no-menus-message" 
-		<?php
-		if ( ! empty( $menus ) ) {
-			echo ' style="display:none" '; }
-		?>
-		>
-			<?php
-			if ( $wp_customize instanceof WP_Customize_Manager ) {
-				$url = 'javascript: wp.customize.panel( "nav_menus" ).focus();';
-			} else {
-				$url = admin_url( 'nav-menus.php' );
-			}
-			?>
-			<?php printf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), esc_url( $url ) ); ?>
-		</p>
-		<div class="nav-menu-widget-form-controls" 
-		<?php
-		if ( empty( $menus ) ) {
-			echo ' style="display:none" '; }
-		?>
-		>
-			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
-				<input type="text" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
-			</p>
-			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>"><?php _e( 'Select Menu:' ); ?></label>
-				<select id="<?php echo esc_attr( $this->get_field_id( 'nav_menu' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_menu' ) ); ?>">
-					<option value="0"><?php _e( '&mdash; Select &mdash;' ); ?></option>
-					<?php foreach ( $menus as $menu ) : ?>
-						<option value="<?php echo esc_attr( $menu->term_id ); ?>" <?php selected( $nav_menu, $menu->term_id ); ?>>
-							<?php echo esc_html( $menu->name ); ?>
-						</option>
-					<?php endforeach; ?>
-				</select>
-			</p>
-			<?php if ( $wp_customize instanceof WP_Customize_Manager ) : ?>
-				<p class="edit-selected-nav-menu" style="
-				<?php
-				if ( ! $nav_menu ) {
-					echo 'display: none;'; }
-				?>
-				">
-					<button type="button" class="button"><?php _e( 'Edit Menu' ); ?></button>
-				</p>
-			<?php endif; ?>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Change SVG icon inside social links menu if there is a supported URL.
-	 *
-	 * @param string   $item_output The menu item’s starting HTML output.
-	 * @param WP_Post  $item        Menu item data object.
-	 * @param int      $depth       Depth of menu item. Used for padding.
-	 * @param stdClass $args        An object of wp_nav_menu() arguments.
-	 */
-	public function nav_menu_social_icons( $item_output, $item, $depth, $args ) {
-		if ( 'social-links-widget' === $args->theme_location ) {
-			$svg = $this->get_social_link_svg( $item->url, 24 );
-			if ( ! empty( $svg ) ) {
-				$item_output = str_replace( $args->link_after, '</span>' . $svg, $item_output );
-			}
-		}
-		return $item_output;
-	}
-
-	/**
-	 * Detects the social network from a URL and returns the SVG code for its icon.
-	 *
-	 * @param string $uri  Social link.
-	 * @param int    $size The icon size in pixels.
-	 */
-	public function get_social_link_svg( $uri, $size ) {
-		$regex_map    = array();
-		$map          = $this->social_icons_map;
-		$social_icons = $this->social_icons;
-		foreach ( array_keys( $social_icons ) as $icon ) {
-			$domains            = array_key_exists( $icon, $map ) ? $map[ $icon ] : array( sprintf( '%s.com', $icon ) );
-			$domains            = array_map( 'trim', $domains ); // Remove leading/trailing spaces, to prevent regex from failing to match.
-			$domains            = array_map( 'preg_quote', $domains );
-			$regex_map[ $icon ] = sprintf( '/(%s)/i', implode( '|', $domains ) );
-		}
-		foreach ( $regex_map as $icon => $regex ) {
-			if ( preg_match( $regex, $uri ) ) {
-				return $this->get_svg( $icon, $size );
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Gets the SVG code for a given icon.
 	 *
-	 * @param string $icon  The name of the icon.
+	 * @param string $icon  The icon.
 	 * @param int    $size  The icon size in pixels.
 	 */
-	public function get_svg( $icon, $size ) {
-		$arr = $this->social_icons;
+	public static function get_svg( $icon, $size ) {
+		$arr = self::$svg_icons;
+		/**
+		 * Filters the plugin array of icons.
+		 *
+		 * The dynamic portion of the hook name.
+		 *
+		 * @param array $arr Array of icons.
+		 */
+		$arr = apply_filters( 'rssm_svg_icons', $arr );
 		if ( array_key_exists( $icon, $arr ) ) {
 			$repl = sprintf( '<svg class="svg-icon" width="%d" height="%d" aria-hidden="true" role="img" focusable="false" ', $size, $size );
 			// Add extra attributes to SVG code.
@@ -635,10 +343,3 @@ class Rather_Simple_Social_Menu_Widget extends WP_Widget {
 		return null;
 	}
 }
-
-add_action(
-	'widgets_init',
-	function () {
-		return register_widget( 'Rather_Simple_Social_Menu_Widget' );
-	}
-);
