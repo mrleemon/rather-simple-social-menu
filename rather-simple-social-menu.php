@@ -81,56 +81,6 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Gets the SVG code for a given icon.
-	 *
-	 * @param string $icon  The name of the icon.
-	 * @param int    $size  The icon size in pixels.
-	 */
-	public function get_svg( $icon, $size ) {
-		$arr = $this->svg_icons;
-		if ( array_key_exists( $icon, $arr ) ) {
-			$repl = sprintf( '<svg class="svg-icon" width="%d" height="%d" aria-hidden="true" role="img" focusable="false" ', $size, $size );
-			// Add extra attributes to SVG code.
-			$svg = preg_replace( '/^<svg /', $repl, trim( $arr[ $icon ] ) );
-			// Remove newlines & tabs.
-			$svg = preg_replace( "/([\n\t]+)/", ' ', $svg );
-			// Remove white space between SVG tags.
-			$svg = preg_replace( '/>\s*</', '><', $svg );
-			// Make sure that only our allowed tags and attributes are included.
-			$svg = wp_kses(
-				$svg,
-				array(
-					'svg'     => array(
-						'class'       => true,
-						'xmlns'       => true,
-						'width'       => true,
-						'height'      => true,
-						'viewbox'     => true,
-						'aria-hidden' => true,
-						'role'        => true,
-						'focusable'   => true,
-					),
-					'path'    => array(
-						'fill'      => true,
-						'fill-rule' => true,
-						'd'         => true,
-						'transform' => true,
-					),
-					'polygon' => array(
-						'fill'      => true,
-						'fill-rule' => true,
-						'points'    => true,
-						'transform' => true,
-						'focusable' => true,
-					),
-				)
-			);
-			return $svg;
-		}
-		return null;
-	}
-
-	/**
 	 * Add custom fields (SVG URL and Hide Text) to only "Custom Link" menu items.
 	 *
 	 * @param string  $item_id  Menu item ID as a numeric string.
