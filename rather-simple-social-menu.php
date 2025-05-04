@@ -4,7 +4,7 @@
  * Plugin URI:
  * Update URI: false
  * Version: 2.0
- * Requires at least: 5.3
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
@@ -60,12 +60,12 @@ class Rather_Simple_Social_Menu {
 
 		$this->includes();
 
-		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'my_add_svg_icon_nav_fields_custom_link' ), 10, 2 );
-		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'my_add_svg_icon_nav_fields_customize_template' ) );
-		add_action( 'wp_update_nav_menu_item', array( $this, 'my_save_svg_icon_nav_fields' ), 10, 2 );
-		add_filter( 'wp_setup_nav_menu_item', array( $this, 'my_add_svg_icon_nav_item_data' ) );
-		add_filter( 'nav_menu_css_class', array( $this, 'my_add_icon_class_to_menu_li' ), 10, 2 );
-		add_filter( 'nav_menu_item_title', array( $this, 'custom_menu_item_html' ), 10, 2 );
+		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'wp_nav_menu_item_custom_fields' ), 10, 2 );
+		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
+		add_action( 'wp_update_nav_menu_item', array( $this, 'wp_update_nav_menu_item' ), 10, 2 );
+		add_filter( 'wp_setup_nav_menu_item', array( $this, 'wp_setup_nav_menu_item' ) );
+		add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_css_class' ), 10, 2 );
+		add_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ), 10, 2 );
 	}
 
 	/**
@@ -136,7 +136,7 @@ class Rather_Simple_Social_Menu {
 	 * @param string  $item_id  Menu item ID as a numeric string.
 	 * @param WP_Post $item     Menu item data object.
 	 */
-	public function my_add_svg_icon_nav_fields_custom_link( $item_id, $item ) {
+	public function wp_nav_menu_item_custom_fields( $item_id, $item ) {
 		// Only apply to custom links.
 		if ( 'custom' !== $item->type ) {
 			return;
@@ -174,7 +174,7 @@ class Rather_Simple_Social_Menu {
 	/**
 	 * Add custom fields (SVG Icon and Hide Text) to menu items in the Customizer.
 	 */
-	public function my_add_svg_icon_nav_fields_customize_template() {
+	public function wp_nav_menu_item_custom_fields_customize_template() {
 		?>
 	<# console.log(data); if ( 'custom' === data.item_type ) { #>
 		<p class="field-svg-icon description description-wide">
@@ -208,7 +208,7 @@ class Rather_Simple_Social_Menu {
 	 * @param int $menu_id          The ID of the menu. If 0, makes the menu item a draft orphan.
 	 * @param int $menu_item_db_id  The ID of the menu item. If 0, creates a new menu item.
 	 */
-	public function my_save_svg_icon_nav_fields( $menu_id, $menu_item_db_id ) {
+	public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id ) {
 		// Save SVG Icon.
 		if ( isset( $_POST['menu-item-svg-icon'] ) && is_array( $_POST['menu-item-svg-icon'] ) ) {
 			if ( isset( $_POST['menu-item-svg-icon'][ $menu_item_db_id ] ) ) {
@@ -236,7 +236,7 @@ class Rather_Simple_Social_Menu {
 	 *
 	 * @param WP_Post $menu_item The menu item to modify.
 	 */
-	public function my_add_svg_icon_nav_item_data( $menu_item ) {
+	public function wp_setup_nav_menu_item( $menu_item ) {
 		$menu_item->svg_icon       = get_post_meta( $menu_item->ID, '_menu_item_svg_icon', true );
 		$menu_item->hide_title = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
 		return $menu_item;
@@ -248,7 +248,7 @@ class Rather_Simple_Social_Menu {
 	 * @param string[] $classes    The HTML attributes applied to the menu item's `<li>` element.
 	 * @param WP_Post  $menu_item  The current menu item object.
 	 */
-	public function my_add_icon_class_to_menu_li( $classes, $menu_item ) {
+	public function nav_menu_css_class( $classes, $menu_item ) {
 		if ( ! empty( $menu_item->svg_icon ) ) {
 			$classes[] = 'menu-item-has-icon';
 		}
@@ -261,7 +261,7 @@ class Rather_Simple_Social_Menu {
 	 * @param string  $title  The menu item’s title.
 	 * @param WP_Post $item   The current menu item object.
 	 */
-	public function custom_menu_item_html( $title, $item ) {
+	public function nav_menu_item_title( $title, $item ) {
 		$svg_markup = '';
 		if ( ! empty( $item->svg_icon ) ) {
 			$svg_markup = Plugin_SVG_Icons::get_svg( $item->svg_icon, 16 );
