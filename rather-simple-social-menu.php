@@ -145,8 +145,8 @@ class Rather_Simple_Social_Menu {
 		if ( ! isset( $item->svg_icon ) ) {
 			$item->svg_icon = get_post_meta( $item_id, '_menu_item_svg_icon', true );
 		}
-		if ( ! isset( $item->hide_menu_text ) ) {
-			$item->hide_menu_text = get_post_meta( $item_id, '_menu_item_hide_text', true );
+		if ( ! isset( $item->hide_title ) ) {
+			$item->hide_title = get_post_meta( $item_id, '_menu_item_hide_text', true );
 		}
 		?>
 	<p class="field-svg-icon description description-wide">
@@ -164,8 +164,8 @@ class Rather_Simple_Social_Menu {
 	</p>
 	<p class="field-hide-menu-text description description-wide">
 		<label for="edit-menu-item-hide-text-<?php echo $item_id; ?>">
-			<input type="checkbox" id="edit-menu-item-hide-text-<?php echo $item_id; ?>" name="menu-item-hide-text[<?php echo $item_id; ?>]" value="1" <?php checked( $item->hide_menu_text, '1' ); ?> />
-			<?php _e( 'Hide Menu Text', 'rather-simple-social-menu' ); ?>
+			<input type="checkbox" id="edit-menu-item-hide-text-<?php echo $item_id; ?>" name="menu-item-hide-text[<?php echo $item_id; ?>]" value="1" <?php checked( $item->hide_title, '1' ); ?> />
+			<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 		</label>
 	</p>
 		<?php
@@ -194,8 +194,8 @@ class Rather_Simple_Social_Menu {
 		</p>
 		<p class="field-hide-menu-text description description-wide">
 			<label for="edit-menu-item-hide-text-{{ data.menu_item_id }}">
-				<input type="checkbox" data-field="hide_menu_text" value="1" <# if ( data.hide_menu_text ) { #> checked="checked" <# } #> />
-					<?php _e( 'Hide Menu Text', 'rather-simple-social-menu' ); ?>
+				<input type="checkbox" data-field="hide_title" value="1" <# if ( data.hide_title ) { #> checked="checked" <# } #> />
+					<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 			</label>
 		</p>
 	<# } #>
@@ -231,7 +231,6 @@ class Rather_Simple_Social_Menu {
 		}
 	}
 
-
 	/**
 	 * Add custom field data (SVG icon and Hide Text) to the menu item object for all types.
 	 *
@@ -239,7 +238,7 @@ class Rather_Simple_Social_Menu {
 	 */
 	public function my_add_svg_icon_nav_item_data( $menu_item ) {
 		$menu_item->svg_icon       = get_post_meta( $menu_item->ID, '_menu_item_svg_icon', true );
-		$menu_item->hide_menu_text = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
+		$menu_item->hide_title = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
 		return $menu_item;
 	}
 
@@ -267,10 +266,10 @@ class Rather_Simple_Social_Menu {
 		if ( ! empty( $item->svg_icon ) ) {
 			$svg_markup = Plugin_SVG_Icons::get_svg( $item->svg_icon, 16 );
 		}
-		if ( ! empty( $svg_markup ) && ! $item->hide_menu_text ) {
+		if ( ! empty( $svg_markup ) && ! $item->hide_title ) {
 			// Icon before text.
 			$title = $svg_markup . ' ' . $title;
-		} elseif ( ! empty( $svg_markup ) && $item->hide_menu_text ) {
+		} elseif ( ! empty( $svg_markup ) && $item->hide_title ) {
 			// Only the icon.
 			$title = $svg_markup . '<span class="screen-reader-text">' . $title . '</span>';
 		}

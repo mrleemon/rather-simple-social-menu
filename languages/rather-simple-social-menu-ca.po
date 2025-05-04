@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Rather Simple Social Menu\n"
-"POT-Creation-Date: 2025-05-04 18:04+0200\n"
-"PO-Revision-Date: 2025-05-04 18:05+0200\n"
+"POT-Creation-Date: 2025-05-04 19:45+0200\n"
+"PO-Revision-Date: 2025-05-04 19:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca\n"
@@ -20,13 +20,13 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: rather-simple-social-menu.php:153 rather-simple-social-menu.php:181
+#: rather-simple-social-menu.php:154 rather-simple-social-menu.php:182
 msgid "Icon"
 msgstr "Icona"
 
-#: rather-simple-social-menu.php:167 rather-simple-social-menu.php:197
-msgid "Hide Menu Text"
-msgstr "Amaga el text del menú"
+#: rather-simple-social-menu.php:168 rather-simple-social-menu.php:198
+msgid "Hide Title"
+msgstr "Amaga el títol"
 
 #. Plugin Name of the plugin/theme
 msgid "Rather Simple Social Menu"
