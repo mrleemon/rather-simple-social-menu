@@ -64,6 +64,7 @@ class Rather_Simple_Social_Menu {
 		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'my_add_svg_icon_nav_fields_customize_template' ) );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'my_save_svg_icon_nav_fields' ), 10, 2 );
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'my_add_svg_icon_nav_item_data' ) );
+		add_filter( 'nav_menu_css_class', array( $this, 'my_add_icon_class_to_menu_li' ), 10, 2 );
 		add_filter( 'nav_menu_item_title', array( $this, 'custom_menu_item_html' ), 10, 2 );
 	}
 
@@ -240,6 +241,19 @@ class Rather_Simple_Social_Menu {
 		$menu_item->svg_icon       = get_post_meta( $menu_item->ID, '_menu_item_svg_icon', true );
 		$menu_item->hide_menu_text = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
 		return $menu_item;
+	}
+
+	/**
+	 * Filter the HTML attributes of a menu item (`<li>` element).
+	 *
+	 * @param string[] $classes    The HTML attributes applied to the menu item's `<li>` element.
+	 * @param WP_Post  $menu_item  The current menu item object.
+	 */
+	public function my_add_icon_class_to_menu_li( $classes, $menu_item ) {
+		if ( ! empty( $menu_item->svg_icon ) ) {
+			$classes[] = 'menu-item-has-icon';
+		}
+		return $classes;
 	}
 
 	/**
