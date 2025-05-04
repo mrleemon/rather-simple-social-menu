@@ -92,21 +92,21 @@ class Rather_Simple_Social_Menu {
 			return;
 		}
 
-		if ( ! isset( $item->svg_icon ) ) {
-			$item->svg_icon = get_post_meta( $item_id, '_menu_item_svg_icon', true );
+		if ( ! isset( $item->icon ) ) {
+			$item->icon = get_post_meta( $item_id, '_menu_item_icon', true );
 		}
 		if ( ! isset( $item->hide_title ) ) {
 			$item->hide_title = get_post_meta( $item_id, '_menu_item_hide_text', true );
 		}
 		?>
 	<p class="field-svg-icon description description-wide">
-		<label for="edit-menu-item-svg-icon-<?php echo $item_id; ?>">
+		<label for="edit-menu-item-icon-<?php echo $item_id; ?>">
 			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
-			<select name="menu-item-svg-icon[<?php echo $item_id; ?>]" id="edit-menu-item-svg-icon-<?php echo $item_id; ?>">
-			<option value="" <?php selected( empty( $item->svg_icon ) ); ?>></option>
+			<select name="menu-item-icon[<?php echo $item_id; ?>]" id="edit-menu-item-icon-<?php echo $item_id; ?>">
+			<option value="" <?php selected( empty( $item->icon ) ); ?>></option>
 			<?php
 			foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
-				echo '<option value="' . esc_attr( $clave ) . '" ' . selected( $clave, $item->svg_icon, false ) . '>' . esc_html( $clave ) . '</option>';
+				echo '<option value="' . esc_attr( $clave ) . '" ' . selected( $clave, $item->icon, false ) . '>' . esc_html( $clave ) . '</option>';
 			endforeach;
 			?>
 			</select>
@@ -128,7 +128,7 @@ class Rather_Simple_Social_Menu {
 		?>
 	<# console.log(data); if ( 'custom' === data.item_type ) { #>
 		<p class="field-svg-icon description description-wide">
-			<label for="edit-menu-item-svg-icon-{{ data.menu_item_id }}">
+			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
 				<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 				<select data-field="svg_icon">
 					<option value="" <# if ( ! data.svg_icon ) { #> selected="selected" <# } #>></option>
@@ -160,12 +160,12 @@ class Rather_Simple_Social_Menu {
 	 */
 	public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id ) {
 		// Save SVG Icon.
-		if ( isset( $_POST['menu-item-svg-icon'] ) && is_array( $_POST['menu-item-svg-icon'] ) ) {
-			if ( isset( $_POST['menu-item-svg-icon'][ $menu_item_db_id ] ) ) {
-				$svg_icon = $_POST['menu-item-svg-icon'][ $menu_item_db_id ];
-				update_post_meta( $menu_item_db_id, '_menu_item_svg_icon', $svg_icon );
+		if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
+			if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
+				$svg_icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
+				update_post_meta( $menu_item_db_id, '_menu_item_icon', $svg_icon );
 			} else {
-				delete_post_meta( $menu_item_db_id, '_menu_item_svg_icon' );
+				delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
 			}
 		}
 
@@ -187,7 +187,7 @@ class Rather_Simple_Social_Menu {
 	 * @param WP_Post $menu_item The menu item to modify.
 	 */
 	public function wp_setup_nav_menu_item( $menu_item ) {
-		$menu_item->svg_icon       = get_post_meta( $menu_item->ID, '_menu_item_svg_icon', true );
+		$menu_item->icon       = get_post_meta( $menu_item->ID, '_menu_item_icon', true );
 		$menu_item->hide_title = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
 		return $menu_item;
 	}
@@ -199,7 +199,7 @@ class Rather_Simple_Social_Menu {
 	 * @param WP_Post  $menu_item  The current menu item object.
 	 */
 	public function nav_menu_css_class( $classes, $menu_item ) {
-		if ( ! empty( $menu_item->svg_icon ) ) {
+		if ( ! empty( $menu_item->icon ) ) {
 			$classes[] = 'menu-item-has-icon';
 		}
 		return $classes;
@@ -213,8 +213,8 @@ class Rather_Simple_Social_Menu {
 	 */
 	public function nav_menu_item_title( $title, $item ) {
 		$svg_markup = '';
-		if ( ! empty( $item->svg_icon ) ) {
-			$svg_markup = Plugin_SVG_Icons::get_svg( $item->svg_icon, 16 );
+		if ( ! empty( $item->icon ) ) {
+			$svg_markup = Plugin_SVG_Icons::get_svg( $item->icon, 16 );
 		}
 		if ( ! empty( $svg_markup ) && ! $item->hide_title ) {
 			// Icon before text.
