@@ -3,7 +3,7 @@
  * Plugin Name: Rather Simple Social Menu
  * Plugin URI:
  * Update URI: false
- * Version: 2.0
+ * Version: 3.0
  * Requires at least: 6.8
  * Requires PHP: 7.4
  * Author: Oscar Ciutat

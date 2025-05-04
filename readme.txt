@@ -1,17 +1,17 @@
-=== Rather Simple Social Menu Widget ===
+=== Rather Simple Social Menu ===
 Contributors: leemon
 Tags: social, icons, menu
 Requires at least: 6.8
 Tested up to: 6.8
-Stable tag: 2.0
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A really simple social menu widget
+A really simple social menu
 
 == Description ==
 
-A really simple social menu widget
+A really simple social menu
 
 This plugin is experimental and is provided with no support or warranty. 
 
@@ -21,7 +21,7 @@ This plugin is experimental and is provided with no support or warranty.
 
 == Copyright ==
 
-Rather Simple Social Menu Widget is distributed under the terms of the GNU GPL
+Rather Simple Social Menu is distributed under the terms of the GNU GPL
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,5 +34,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+= 3.0 =
+* Big refactor
+
+= 2.0 =
+* Use SVG icons instead of icon font
+
 = 1.0 =
 * Initial release
