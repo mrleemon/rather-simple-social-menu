@@ -61,11 +61,15 @@ class Rather_Simple_Social_Menu {
 		$this->includes();
 
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'wp_nav_menu_item_custom_fields' ), 10, 2 );
-		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'wp_update_nav_menu_item' ), 10, 2 );
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'wp_setup_nav_menu_item' ) );
 		add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_css_class' ), 10, 2 );
 		add_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ), 10, 2 );
+
+		//add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
+		//add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
+		add_action( 'customize_register', array( $this, 'customize_register' ), 1000, 1 );
+		add_action( 'customize_save_after', array( $this, 'customize_save_after' ) );
 	}
 
 	/**
@@ -101,14 +105,14 @@ class Rather_Simple_Social_Menu {
 		?>
 	<p class="field-svg-icon description description-wide">
 		<label for="edit-menu-item-icon-<?php echo $item_id; ?>">
-			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
+		<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 			<select name="menu-item-icon[<?php echo $item_id; ?>]" id="edit-menu-item-icon-<?php echo $item_id; ?>">
 			<option value="" <?php selected( empty( $item->icon ) ); ?>></option>
-			<?php
-			foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
-				echo '<option value="' . esc_attr( $clave ) . '" ' . selected( $clave, $item->icon, false ) . '>' . esc_html( $clave ) . '</option>';
+		<?php
+		foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
+			echo '<option value="' . esc_attr( $clave ) . '" ' . selected( $clave, $item->icon, false ) . '>' . esc_html( $clave ) . '</option>';
 			endforeach;
-			?>
+		?>
 			</select>
 		</label>
 	</p>
@@ -129,27 +133,27 @@ class Rather_Simple_Social_Menu {
 	<# console.log(data); if ( 'custom' === data.item_type ) { #>
 		<p class="field-svg-icon description description-wide">
 			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
-				<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
+			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 				<select data-field="svg_icon">
 					<option value="" <# if ( ! data.svg_icon ) { #> selected="selected" <# } #>></option>
-					<?php
-					foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
-						?>
+				<?php
+				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
+					?>
 						<option value="<?php echo esc_attr( $clave ); ?>" <# if ( data.svg_icon === '<?php echo esc_attr( $clave ); ?>' ) { #> selected="selected" <# } #>><?php echo esc_html( $clave ); ?></option>
 						<?php
 						endforeach;
-					?>
+				?>
 				</select>
 			</label>
 		</p>
 		<p class="field-hide-menu-text description description-wide">
 			<label for="edit-menu-item-hide-text-{{ data.menu_item_id }}">
 				<input type="checkbox" data-field="hide_title" value="1" <# if ( data.hide_title ) { #> checked="checked" <# } #> />
-					<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
+				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 			</label>
 		</p>
 	<# } #>
-		<?php
+			<?php
 	}
 
 	/**
@@ -224,6 +228,95 @@ class Rather_Simple_Social_Menu {
 			$title = $svg_markup . '<span class="screen-reader-text">' . $title . '</span>';
 		}
 		return $title;
+	}
+
+
+	public function customize_controls_enqueue_scripts() {
+		wp_enqueue_script(
+			'customize-nav-menu-icon',
+			plugin_dir_url( __FILE__ ) . 'assets/js/customize.js',
+			array( 'customize-controls', 'customize-nav-menus', 'jquery' ),
+			filemtime( __DIR__ . '/assets/js/customize.js' ),
+			true
+		);
+	}
+
+	public function customize_menu_item_svg_icon_fields() {
+		?>
+	<p class="field-svg-icon description description-wide">
+		<label>
+		<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
+			<select name="menu-item-icon[{{ data.menu_item_id }}]" id="edit-menu-item-icon-{{ data.menu_item_id }}">
+				<option value=""></option>
+			<?php foreach ( array_keys( \Plugin_SVG_Icons::$svg_icons ) as $key ) : ?>
+					<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</label>
+	</p>
+	<p class="field-hide-menu-text description description-wide">
+		<label for="edit-menu-item-hide-text-{{ data.menu_item_id }}">
+			<input type="checkbox" id="edit-menu-item-hide-text-{{ data.menu_item_id }}" name="menu-item-hide-text[{{ data.menu_item_id }}]" value="1" />
+		<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
+		</label>
+	</p>
+		<?php
+	}
+
+	public function preview_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
+		$values = $setting->post_value();
+		if ( ! is_array( $values ) ) {
+			return;
+		}
+
+		add_filter(
+			'get_post_metadata',
+			static function ( $value, $object_id, $meta_key ) use ( $setting, $values ) {
+				if ( $object_id === $setting->post_id ) {
+					if ( '_menu_item_icon' === $meta_key ) {
+						return array( sanitize_text_field( $values['icon'] ?? '' ) );
+					}
+					if ( '_menu_item_hide_title' === $meta_key ) {
+						return array( $values['hide_title'] ?? '0' );
+					}
+				}
+				return $value;
+			},
+			10,
+			3
+		);
+	}
+
+	public function save_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
+		$values = $setting->post_value();
+		if ( ! is_array( $values ) ) {
+			return;
+		}
+
+		if ( isset( $values['icon'] ) ) {
+			update_post_meta( $setting->post_id, '_menu_item_icon', sanitize_text_field( $values['icon'] ) );
+		}
+		if ( isset( $values['hide_title'] ) ) {
+			update_post_meta( $setting->post_id, '_menu_item_hide_title', $values['hide_title'] === '1' ? '1' : '0' );
+		}
+	}
+
+	public function customize_register( WP_Customize_Manager $wp_customize ) {
+		if ( $wp_customize->settings_previewed() ) {
+			foreach ( $wp_customize->settings() as $setting ) {
+				if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting ) {
+					$this->preview_nav_menu_item_icon( $setting );
+				}
+			}
+		}
+	}
+
+	public function customize_save_after( WP_Customize_Manager $wp_customize ) {
+		foreach ( $wp_customize->settings() as $setting ) {
+			if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting && $setting->check_capabilities() ) {
+				$this->save_nav_menu_item_icon( $setting );
+			}
+		}
 	}
 }
 
