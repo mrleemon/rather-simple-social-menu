@@ -130,16 +130,16 @@ class Rather_Simple_Social_Menu {
 	 */
 	public function wp_nav_menu_item_custom_fields_customize_template() {
 		?>
-	<# console.log(data); if ( 'custom' === data.item_type ) { #>
+	<# if ( 'custom' === data.item_type ) { #>
 		<p class="field-icon description description-wide">
 			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
 			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 				<select data-field="icon">
-					<option value="" <# if ( ! data.icon ) { #> selected="selected" <# } #>></option>
+					<option value=""></option>
 				<?php
-				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
+				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $key ) :
 					?>
-						<option value="<?php echo esc_attr( $clave ); ?>" <# if ( data.icon === '<?php echo esc_attr( $clave ); ?>' ) { #> selected="selected" <# } #>><?php echo esc_html( $clave ); ?></option>
+						<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></option>
 						<?php
 						endforeach;
 				?>
@@ -148,7 +148,7 @@ class Rather_Simple_Social_Menu {
 		</p>
 		<p class="field-hide-title description description-wide">
 			<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
-				<input type="checkbox" data-field="hide_title" value="1" <# if ( data.hide_title ) { #> checked="checked" <# } #> />
+				<input type="checkbox" data-field="hide_title" value="1" />
 				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 			</label>
 		</p>
