@@ -85,7 +85,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom fields (SVG URL and Hide Text) to only "Custom Link" menu items.
+	 * Add custom fields (SVG URL and Hide Title) to only "Custom Link" menu items.
 	 *
 	 * @param string  $item_id  Menu item ID as a numeric string.
 	 * @param WP_Post $item     Menu item data object.
@@ -100,7 +100,7 @@ class Rather_Simple_Social_Menu {
 			$item->icon = get_post_meta( $item_id, '_menu_item_icon', true );
 		}
 		if ( ! isset( $item->hide_title ) ) {
-			$item->hide_title = get_post_meta( $item_id, '_menu_item_hide_text', true );
+			$item->hide_title = get_post_meta( $item_id, '_menu_item_hide_title', true );
 		}
 		?>
 	<p class="field-svg-icon description description-wide">
@@ -116,9 +116,9 @@ class Rather_Simple_Social_Menu {
 			</select>
 		</label>
 	</p>
-	<p class="field-hide-menu-text description description-wide">
-		<label for="edit-menu-item-hide-text-<?php echo $item_id; ?>">
-			<input type="checkbox" id="edit-menu-item-hide-text-<?php echo $item_id; ?>" name="menu-item-hide-text[<?php echo $item_id; ?>]" value="1" <?php checked( $item->hide_title, '1' ); ?> />
+	<p class="field-hide-menu-title description description-wide">
+		<label for="edit-menu-item-hide-title-<?php echo $item_id; ?>">
+			<input type="checkbox" id="edit-menu-item-hide-title-<?php echo $item_id; ?>" name="menu-item-hide-title[<?php echo $item_id; ?>]" value="1" <?php checked( $item->hide_title, '1' ); ?> />
 			<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 		</label>
 	</p>
@@ -126,7 +126,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom fields (SVG Icon and Hide Text) to menu items in the Customizer.
+	 * Add custom fields (SVG Icon and Hide Title) to menu items in the Customizer.
 	 */
 	public function wp_nav_menu_item_custom_fields_customize_template() {
 		?>
@@ -146,8 +146,8 @@ class Rather_Simple_Social_Menu {
 				</select>
 			</label>
 		</p>
-		<p class="field-hide-menu-text description description-wide">
-			<label for="edit-menu-item-hide-text-{{ data.menu_item_id }}">
+		<p class="field-hide-menu-title description description-wide">
+			<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
 				<input type="checkbox" data-field="hide_title" value="1" <# if ( data.hide_title ) { #> checked="checked" <# } #> />
 				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 			</label>
@@ -157,7 +157,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Save custom menu item fields (SVG Icon and Hide Text) for all menu item types.
+	 * Save custom menu item fields (SVG Icon and Hide Title) for all menu item types.
 	 *
 	 * @param int $menu_id          The ID of the menu. If 0, makes the menu item a draft orphan.
 	 * @param int $menu_item_db_id  The ID of the menu item. If 0, creates a new menu item.
@@ -173,26 +173,26 @@ class Rather_Simple_Social_Menu {
 			}
 		}
 
-		// Save Hide Text Checkbox.
-		if ( isset( $_POST['menu-item-hide-text'] ) && is_array( $_POST['menu-item-hide-text'] ) ) {
-			if ( isset( $_POST['menu-item-hide-text'][ $menu_item_db_id ] ) ) {
-				update_post_meta( $menu_item_db_id, '_menu_item_hide_text', 1 );
+		// Save Hide Title Checkbox.
+		if ( isset( $_POST['menu-item-hide-title'] ) && is_array( $_POST['menu-item-hide-title'] ) ) {
+			if ( isset( $_POST['menu-item-hide-title'][ $menu_item_db_id ] ) ) {
+				update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 1 );
 			} else {
-				update_post_meta( $menu_item_db_id, '_menu_item_hide_text', 0 );
+				update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 0 );
 			}
 		} else {
-			delete_post_meta( $menu_item_db_id, '_menu_item_hide_text' );
+			delete_post_meta( $menu_item_db_id, '_menu_item_hide_title' );
 		}
 	}
 
 	/**
-	 * Add custom field data (SVG icon and Hide Text) to the menu item object for all types.
+	 * Add custom field data (SVG icon and Hide Title) to the menu item object for all types.
 	 *
 	 * @param WP_Post $menu_item The menu item to modify.
 	 */
 	public function wp_setup_nav_menu_item( $menu_item ) {
 		$menu_item->icon       = get_post_meta( $menu_item->ID, '_menu_item_icon', true );
-		$menu_item->hide_title = get_post_meta( $menu_item->ID, '_menu_item_hide_text', true );
+		$menu_item->hide_title = get_post_meta( $menu_item->ID, '_menu_item_hide_title', true );
 		return $menu_item;
 	}
 
@@ -210,7 +210,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Output the SVG in the menu and conditionally hide text.
+	 * Output the SVG in the menu and conditionally hide title.
 	 *
 	 * @param string  $title  The menu item’s title.
 	 * @param WP_Post $item   The current menu item object.
@@ -221,7 +221,7 @@ class Rather_Simple_Social_Menu {
 			$svg_markup = Plugin_SVG_Icons::get_svg( $item->icon, 16 );
 		}
 		if ( ! empty( $svg_markup ) && ! $item->hide_title ) {
-			// Icon before text.
+			// Icon before title.
 			$title = $svg_markup . ' ' . $title;
 		} elseif ( ! empty( $svg_markup ) && $item->hide_title ) {
 			// Only the icon.
@@ -254,9 +254,9 @@ class Rather_Simple_Social_Menu {
 			</select>
 		</label>
 	</p>
-	<p class="field-hide-menu-text description description-wide">
-		<label for="edit-menu-item-hide-text-{{ data.menu_item_id }}">
-			<input type="checkbox" id="edit-menu-item-hide-text-{{ data.menu_item_id }}" name="menu-item-hide-text[{{ data.menu_item_id }}]" value="1" />
+	<p class="field-hide-menu-title description description-wide">
+		<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
+			<input type="checkbox" id="edit-menu-item-hide-title-{{ data.menu_item_id }}" name="menu-item-hide-title[{{ data.menu_item_id }}]" value="1" />
 		<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
 		</label>
 	</p>
