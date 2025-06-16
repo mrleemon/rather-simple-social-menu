@@ -134,12 +134,12 @@ class Rather_Simple_Social_Menu {
 		<p class="field-svg-icon description description-wide">
 			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
 			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
-				<select data-field="svg_icon">
-					<option value="" <# if ( ! data.svg_icon ) { #> selected="selected" <# } #>></option>
+				<select data-field="icon">
+					<option value="" <# if ( ! data.icon ) { #> selected="selected" <# } #>></option>
 				<?php
 				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
 					?>
-						<option value="<?php echo esc_attr( $clave ); ?>" <# if ( data.svg_icon === '<?php echo esc_attr( $clave ); ?>' ) { #> selected="selected" <# } #>><?php echo esc_html( $clave ); ?></option>
+						<option value="<?php echo esc_attr( $clave ); ?>" <# if ( data.icon === '<?php echo esc_attr( $clave ); ?>' ) { #> selected="selected" <# } #>><?php echo esc_html( $clave ); ?></option>
 						<?php
 						endforeach;
 				?>
@@ -166,8 +166,8 @@ class Rather_Simple_Social_Menu {
 		// Save SVG Icon.
 		if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
 			if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
-				$svg_icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
-				update_post_meta( $menu_item_db_id, '_menu_item_icon', $svg_icon );
+				$icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
+				update_post_meta( $menu_item_db_id, '_menu_item_icon', $icon );
 			} else {
 				delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
 			}
