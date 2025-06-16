@@ -268,7 +268,7 @@ class Rather_Simple_Social_Menu {
 		wp_enqueue_script(
 			'customize-nav-menu-icon',
 			plugin_dir_url( __FILE__ ) . 'assets/js/customize.js',
-			array( 'customize-controls', 'customize-nav-menus', 'jquery' ),
+			array( 'customize-nav-menus' ),
 			filemtime( __DIR__ . '/assets/js/customize.js' ),
 			true
 		);
