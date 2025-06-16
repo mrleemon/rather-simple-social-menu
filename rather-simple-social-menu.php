@@ -176,43 +176,22 @@ class Rather_Simple_Social_Menu {
 	 * @param int $menu_item_db_id  The ID of the menu item. If 0, creates a new menu item.
 	 */
 	public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id ) {
-
-		// Detect if update is coming from the Customizer.
-		if ( isset( $_POST['customized'] ) ) {
-			$customized = json_decode( stripslashes( $_POST['customized'] ), true );
-			$key        = 'nav_menu_item[' . $menu_item_db_id . ']';
-			if ( isset( $customized[ $key ] ) ) {
-				$menu_item_data = $customized[ $key ];
-				if ( isset( $menu_item_data['icon'] ) ) {
-					update_post_meta( $menu_item_db_id, '_menu_item_icon', sanitize_text_field( $menu_item_data['icon'] ) );
-				} else {
-					delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
-				}
-				if ( isset( $menu_item_data['hide_title'] ) ) {
-					update_post_meta( $menu_item_db_id, '_menu_item_hide_title', (int) $menu_item_data['hide_title'] );
-				} else {
-					delete_post_meta( $menu_item_db_id, '_menu_item_hide_title' );
-				}
+		if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
+			if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
+				$icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
+				update_post_meta( $menu_item_db_id, '_menu_item_icon', $icon );
+			} else {
+				delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
+			}
+		}
+		if ( isset( $_POST['menu-item-hide-title'] ) && is_array( $_POST['menu-item-hide-title'] ) ) {
+			if ( isset( $_POST['menu-item-hide-title'][ $menu_item_db_id ] ) ) {
+				update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 1 );
+			} else {
+				update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 0 );
 			}
 		} else {
-			// Fallback if update is coming from Appearance > Menus screen.
-			if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
-				if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
-					$icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
-					update_post_meta( $menu_item_db_id, '_menu_item_icon', $icon );
-				} else {
-					delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
-				}
-			}
-			if ( isset( $_POST['menu-item-hide-title'] ) && is_array( $_POST['menu-item-hide-title'] ) ) {
-				if ( isset( $_POST['menu-item-hide-title'][ $menu_item_db_id ] ) ) {
-					update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 1 );
-				} else {
-					update_post_meta( $menu_item_db_id, '_menu_item_hide_title', 0 );
-				}
-			} else {
-				delete_post_meta( $menu_item_db_id, '_menu_item_hide_title' );
-			}
+			delete_post_meta( $menu_item_db_id, '_menu_item_hide_title' );
 		}
 	}
 
@@ -309,11 +288,10 @@ class Rather_Simple_Social_Menu {
 	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
 	 */
 	public function save_nav_menu_item( WP_Customize_Nav_Menu_Item_Setting $setting ) {
-		$values = $setting->post_value();
+		$values = $setting->manager->unsanitized_post_values()[ $setting->id ];
 		if ( ! is_array( $values ) ) {
 			return;
 		}
-
 		if ( isset( $values['icon'] ) ) {
 			update_post_meta( $setting->post_id, '_menu_item_icon', sanitize_text_field( $values['icon'] ) );
 		}
