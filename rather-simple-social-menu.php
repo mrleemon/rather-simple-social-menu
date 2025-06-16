@@ -290,7 +290,6 @@ class Rather_Simple_Social_Menu {
 			static function ( $value, $object_id, $meta_key ) use ( $setting, $values ) {
 				if ( $object_id === $setting->post_id ) {
 					if ( '_menu_item_icon' === $meta_key ) {
-						//error_log( print_r( $values, true ), 1, 'oscarciutat@gmail.com' );
 						return array( sanitize_text_field( $values['icon'] ?? '' ) );
 					}
 					if ( '_menu_item_hide_title' === $meta_key ) {
