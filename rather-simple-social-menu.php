@@ -67,7 +67,7 @@ class Rather_Simple_Social_Menu {
 		add_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ), 10, 2 );
 
 		//add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
-		//add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
+		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
 		add_action( 'customize_register', array( $this, 'customize_register' ), 1000, 1 );
 		add_action( 'customize_save_after', array( $this, 'customize_save_after' ) );
 	}
