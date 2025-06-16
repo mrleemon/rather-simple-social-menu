@@ -280,7 +280,7 @@ class Rather_Simple_Social_Menu {
 	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
 	 */
 	public function preview_nav_menu_item( WP_Customize_Nav_Menu_Item_Setting $setting ) {
-		$values = $setting->post_value();
+		$values = $setting->manager->unsanitized_post_values()[ $setting->id ];
 		if ( ! is_array( $values ) ) {
 			return;
 		}
