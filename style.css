@@ -1,24 +1,6 @@
-.social-links-menu {
-    margin: 9.0909% 0;
-    padding: 0;
-}
-
-.social-links-menu ul {
-	list-style: none;
-}
-
-.social-links-menu li {
-	display: inline-block;
-}
-
-.social-links-menu a {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	height: 2.85em;
-	width: 2.85em;
-	color: #fff;
-	background-color: #777;
-	border-radius: 20px;
+.menu-item-has-icon svg {
+	display: block;
+	width: 24px;
+	height: 24px;
+	transform: translateZ(0);
 }
