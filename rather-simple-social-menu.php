@@ -279,7 +279,7 @@ class Rather_Simple_Social_Menu {
 	 *
 	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
 	 */
-	public function preview_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
+	public function preview_nav_menu_item( WP_Customize_Nav_Menu_Item_Setting $setting ) {
 		$values = $setting->post_value();
 		if ( ! is_array( $values ) ) {
 			return;
@@ -309,7 +309,7 @@ class Rather_Simple_Social_Menu {
 	 *
 	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
 	 */
-	public function save_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
+	public function save_nav_menu_item( WP_Customize_Nav_Menu_Item_Setting $setting ) {
 		$values = $setting->post_value();
 		if ( ! is_array( $values ) ) {
 			return;
@@ -332,7 +332,7 @@ class Rather_Simple_Social_Menu {
 		if ( $wp_customize->settings_previewed() ) {
 			foreach ( $wp_customize->settings() as $setting ) {
 				if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting ) {
-					$this->preview_nav_menu_item_icon( $setting );
+					$this->preview_nav_menu_item( $setting );
 				}
 			}
 		}
@@ -346,7 +346,7 @@ class Rather_Simple_Social_Menu {
 	public function customize_save_after( WP_Customize_Manager $wp_customize ) {
 		foreach ( $wp_customize->settings() as $setting ) {
 			if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting && $setting->check_capabilities() ) {
-				$this->save_nav_menu_item_icon( $setting );
+				$this->save_nav_menu_item( $setting );
 			}
 		}
 	}
