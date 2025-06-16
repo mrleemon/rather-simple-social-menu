@@ -248,7 +248,9 @@ class Rather_Simple_Social_Menu {
 		return $title;
 	}
 
-
+	/**
+	 * Enqueue scripts for the Customizer controls.
+	 */
 	public function customize_controls_enqueue_scripts() {
 		wp_enqueue_script(
 			'customize-nav-menu-icon',
@@ -259,6 +261,12 @@ class Rather_Simple_Social_Menu {
 		);
 	}
 
+
+	/**
+	 * Preview the nav menu item icon in the Customizer.
+	 *
+	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
+	 */
 	public function preview_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
 		$values = $setting->post_value();
 		if ( ! is_array( $values ) ) {
@@ -270,6 +278,7 @@ class Rather_Simple_Social_Menu {
 			static function ( $value, $object_id, $meta_key ) use ( $setting, $values ) {
 				if ( $object_id === $setting->post_id ) {
 					if ( '_menu_item_icon' === $meta_key ) {
+						//error_log( print_r( $values, true ), 1, 'oscarciutat@gmail.com' );
 						return array( sanitize_text_field( $values['icon'] ?? '' ) );
 					}
 					if ( '_menu_item_hide_title' === $meta_key ) {
@@ -283,6 +292,11 @@ class Rather_Simple_Social_Menu {
 		);
 	}
 
+	/**
+	 * Save the nav menu item icon and hide title settings.
+	 *
+	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
+	 */
 	public function save_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
 		$values = $setting->post_value();
 		if ( ! is_array( $values ) ) {
@@ -297,6 +311,11 @@ class Rather_Simple_Social_Menu {
 		}
 	}
 
+	/**
+	 * Register the Customizer settings and controls.
+	 *
+	 * @param WP_Customize_Manager $wp_customize The Customizer manager instance.
+	 */
 	public function customize_register( WP_Customize_Manager $wp_customize ) {
 		if ( $wp_customize->settings_previewed() ) {
 			foreach ( $wp_customize->settings() as $setting ) {
@@ -307,6 +326,11 @@ class Rather_Simple_Social_Menu {
 		}
 	}
 
+	/**
+	 * Save the nav menu item icon and hide title settings after Customizer save.
+	 *
+	 * @param WP_Customize_Manager $wp_customize The Customizer manager instance.
+	 */
 	public function customize_save_after( WP_Customize_Manager $wp_customize ) {
 		foreach ( $wp_customize->settings() as $setting ) {
 			if ( $setting instanceof WP_Customize_Nav_Menu_Item_Setting && $setting->check_capabilities() ) {
