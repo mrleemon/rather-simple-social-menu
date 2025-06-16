@@ -116,7 +116,7 @@ class Rather_Simple_Social_Menu {
 			</select>
 		</label>
 	</p>
-	<p class="field-hide-menu-title description description-wide">
+	<p class="field-hide-title description description-wide">
 		<label for="edit-menu-item-hide-title-<?php echo $item_id; ?>">
 			<input type="checkbox" id="edit-menu-item-hide-title-<?php echo $item_id; ?>" name="menu-item-hide-title[<?php echo $item_id; ?>]" value="1" <?php checked( $item->hide_title, '1' ); ?> />
 			<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
@@ -146,7 +146,7 @@ class Rather_Simple_Social_Menu {
 				</select>
 			</label>
 		</p>
-		<p class="field-hide-menu-title description description-wide">
+		<p class="field-hide-title description description-wide">
 			<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
 				<input type="checkbox" data-field="hide_title" value="1" <# if ( data.hide_title ) { #> checked="checked" <# } #> />
 				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>

@@ -15,8 +15,8 @@
 	 * @param {wp.customize.Menus.MenuItemControl} control
 	 */
 	function extendControl(control) {
-		control.iconSelect = control.container.find('.nav_menu_icon select');
-		control.hideTitleCheckbox = control.container.find('.nav_menu_hide_title input[type="checkbox"]');
+		control.iconSelect = control.container.find('.field-icon select');
+		control.hideTitleCheckbox = control.container.find('.field-hide-title input[type="checkbox"]');
 
 		// Inicializa la UI
 		updateControlFields(control);
