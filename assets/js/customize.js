@@ -18,22 +18,22 @@
 		control.iconSelect = control.container.find('.field-icon select');
 		control.hideTitleCheckbox = control.container.find('.field-hide-title input[type="checkbox"]');
 
-		// Inicializa la UI
+		// Initialize the UI
 		updateControlFields(control);
 
-		// Actualiza la UI si cambia el setting por código
+		// Update the UI if the setting changes programmatically
 		control.setting.bind(() => {
 			updateControlFields(control);
 		});
 
-		// Escucha cambios en el select de icono
+		// Listen for changes in the icon select
 		control.iconSelect.on('change', function () {
 			setSettingFields(control.setting, {
 				icon: this.value
 			});
 		});
 
-		// Escucha cambios en el checkbox de ocultar título
+		// Listen for changes in the hide title checkbox
 		control.hideTitleCheckbox.on('change', function () {
 			setSettingFields(control.setting, {
 				hide_title: this.checked
@@ -42,7 +42,7 @@
 	}
 
 	/**
-	 * Actualiza el objeto setting con nuevos valores.
+	 * Update the setting object with new values.
 	 *
 	 * @param {wp.customize.Setting} setting
 	 * @param {Object} updates
@@ -58,7 +58,7 @@
 	}
 
 	/**
-	 * Actualiza la UI del control con los valores actuales del setting.
+	 * Update the UI of the control with the current setting values.
 	 *
 	 * @param {wp.customize.Menus.MenuItemControl} control
 	 */
