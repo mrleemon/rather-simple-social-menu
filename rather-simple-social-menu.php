@@ -261,7 +261,6 @@ class Rather_Simple_Social_Menu {
 		);
 	}
 
-
 	/**
 	 * Preview the nav menu item icon in the Customizer.
 	 *
