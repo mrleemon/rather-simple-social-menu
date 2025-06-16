@@ -66,7 +66,7 @@ class Rather_Simple_Social_Menu {
 		add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_css_class' ), 10, 2 );
 		add_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ), 10, 2 );
 
-		//add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue_scripts' ) );
 		add_action( 'wp_nav_menu_item_custom_fields_customize_template', array( $this, 'wp_nav_menu_item_custom_fields_customize_template' ) );
 		add_action( 'customize_register', array( $this, 'customize_register' ), 1000, 1 );
 		add_action( 'customize_save_after', array( $this, 'customize_save_after' ) );
@@ -85,7 +85,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom fields (SVG URL and Hide Title) to only "Custom Link" menu items.
+	 * Add custom fields (Icon and Hide Title) to only "Custom Link" menu items.
 	 *
 	 * @param string  $item_id  Menu item ID as a numeric string.
 	 * @param WP_Post $item     Menu item data object.
@@ -103,7 +103,7 @@ class Rather_Simple_Social_Menu {
 			$item->hide_title = get_post_meta( $item_id, '_menu_item_hide_title', true );
 		}
 		?>
-	<p class="field-svg-icon description description-wide">
+	<p class="field-icon description description-wide">
 		<label for="edit-menu-item-icon-<?php echo $item_id; ?>">
 		<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 			<select name="menu-item-icon[<?php echo $item_id; ?>]" id="edit-menu-item-icon-<?php echo $item_id; ?>">
@@ -126,12 +126,12 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom fields (SVG Icon and Hide Title) to menu items in the Customizer.
+	 * Add custom fields (Icon and Hide Title) to menu items in the Customizer.
 	 */
 	public function wp_nav_menu_item_custom_fields_customize_template() {
 		?>
 	<# console.log(data); if ( 'custom' === data.item_type ) { #>
-		<p class="field-svg-icon description description-wide">
+		<p class="field-icon description description-wide">
 			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
 			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
 				<select data-field="icon">
@@ -157,13 +157,13 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Save custom menu item fields (SVG Icon and Hide Title) for all menu item types.
+	 * Save custom menu item fields (Icon and Hide Title) for all menu item types.
 	 *
 	 * @param int $menu_id          The ID of the menu. If 0, makes the menu item a draft orphan.
 	 * @param int $menu_item_db_id  The ID of the menu item. If 0, creates a new menu item.
 	 */
 	public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id ) {
-		// Save SVG Icon.
+		// Save Icon.
 		if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
 			if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
 				$icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
@@ -186,7 +186,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom field data (SVG icon and Hide Title) to the menu item object for all types.
+	 * Add custom field data (Icon and Hide Title) to the menu item object for all types.
 	 *
 	 * @param WP_Post $menu_item The menu item to modify.
 	 */
@@ -210,7 +210,7 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Output the SVG in the menu and conditionally hide title.
+	 * Output the icon in the menu and conditionally hide title.
 	 *
 	 * @param string  $title  The menu item’s title.
 	 * @param WP_Post $item   The current menu item object.
@@ -239,28 +239,6 @@ class Rather_Simple_Social_Menu {
 			filemtime( __DIR__ . '/assets/js/customize.js' ),
 			true
 		);
-	}
-
-	public function customize_menu_item_svg_icon_fields() {
-		?>
-	<p class="field-svg-icon description description-wide">
-		<label>
-		<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
-			<select name="menu-item-icon[{{ data.menu_item_id }}]" id="edit-menu-item-icon-{{ data.menu_item_id }}">
-				<option value=""></option>
-			<?php foreach ( array_keys( \Plugin_SVG_Icons::$svg_icons ) as $key ) : ?>
-					<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></option>
-				<?php endforeach; ?>
-			</select>
-		</label>
-	</p>
-	<p class="field-hide-menu-title description description-wide">
-		<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
-			<input type="checkbox" id="edit-menu-item-hide-title-{{ data.menu_item_id }}" name="menu-item-hide-title[{{ data.menu_item_id }}]" value="1" />
-		<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
-		</label>
-	</p>
-		<?php
 	}
 
 	public function preview_nav_menu_item_icon( WP_Customize_Nav_Menu_Item_Setting $setting ) {
