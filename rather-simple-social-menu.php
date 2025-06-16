@@ -60,6 +60,7 @@ class Rather_Simple_Social_Menu {
 
 		$this->includes();
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 		add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'wp_nav_menu_item_custom_fields' ), 10, 2 );
 		add_action( 'wp_update_nav_menu_item', array( $this, 'wp_update_nav_menu_item' ), 10, 2 );
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'wp_setup_nav_menu_item' ) );
@@ -82,6 +83,18 @@ class Rather_Simple_Social_Menu {
 	 */
 	protected function includes() {
 		require 'classes/class-plugin-svg-icons.php';
+	}
+
+	/**
+	 * Enqueues scripts and styles in the frontend.
+	 */
+	public function wp_enqueue_scripts() {
+		wp_enqueue_style(
+			'wat-style',
+			plugins_url( 'style.css', __FILE__ ),
+			array(),
+			filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
+		);
 	}
 
 	/**
