@@ -139,37 +139,6 @@ class Rather_Simple_Social_Menu {
 	}
 
 	/**
-	 * Add custom fields (Icon and Hide Title) to menu items in the Customizer.
-	 */
-	public function wp_nav_menu_item_custom_fields_customize_template() {
-		?>
-	<# if ( 'custom' === data.item_type ) { #>
-		<p class="field-icon description description-wide">
-			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
-			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
-				<select data-field="icon">
-					<option value=""></option>
-				<?php
-				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $key ) :
-					?>
-						<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></option>
-						<?php
-						endforeach;
-				?>
-				</select>
-			</label>
-		</p>
-		<p class="field-hide-title description description-wide">
-			<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
-				<input type="checkbox" data-field="hide_title" value="1" />
-				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
-			</label>
-		</p>
-	<# } #>
-			<?php
-	}
-
-	/**
 	 * Save custom menu item fields (Icon and Hide Title) for all menu item types.
 	 *
 	 * @param int $menu_id          The ID of the menu. If 0, makes the menu item a draft orphan.
@@ -251,6 +220,37 @@ class Rather_Simple_Social_Menu {
 			filemtime( __DIR__ . '/assets/js/customize.js' ),
 			true
 		);
+	}
+
+	/**
+	 * Add custom fields (Icon and Hide Title) to menu items in the Customizer.
+	 */
+	public function wp_nav_menu_item_custom_fields_customize_template() {
+		?>
+	<# if ( 'custom' === data.item_type ) { #>
+		<p class="field-icon description description-wide">
+			<label for="edit-menu-item-icon-{{ data.menu_item_id }}">
+			<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
+				<select data-field="icon">
+					<option value=""></option>
+				<?php
+				foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $key ) :
+					?>
+						<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></option>
+						<?php
+						endforeach;
+				?>
+				</select>
+			</label>
+		</p>
+		<p class="field-hide-title description description-wide">
+			<label for="edit-menu-item-hide-title-{{ data.menu_item_id }}">
+				<input type="checkbox" data-field="hide_title" value="1" />
+				<?php _e( 'Hide Title', 'rather-simple-social-menu' ); ?>
+			</label>
+		</p>
+	<# } #>
+			<?php
 	}
 
 	/**
