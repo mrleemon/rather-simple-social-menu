@@ -184,6 +184,7 @@ class Rather_Simple_Social_Menu {
 	public function nav_menu_css_class( $classes, $menu_item ) {
 		if ( ! empty( $menu_item->icon ) ) {
 			$classes[] = 'menu-item-has-icon';
+			$classes[] = 'menu-item-icon-' . esc_attr( $menu_item->icon );
 		}
 		return $classes;
 	}
