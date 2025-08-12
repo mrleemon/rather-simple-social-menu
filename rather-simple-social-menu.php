@@ -290,10 +290,12 @@ class Rather_Simple_Social_Menu {
 	 * @param WP_Customize_Nav_Menu_Item_Setting $setting The menu item setting.
 	 */
 	public function save_nav_menu_item( WP_Customize_Nav_Menu_Item_Setting $setting ) {
-		$values = $setting->manager->unsanitized_post_values()[ $setting->id ];
-		if ( ! is_array( $values ) ) {
+		$unsanitized_values = $setting->manager->unsanitized_post_values();
+		if ( ! isset( $unsanitized_values[ $setting->id ] ) || ! is_array( $unsanitized_values[ $setting->id ] ) ) {
 			return;
 		}
+		$values = $unsanitized_values[ $setting->id ];
+
 		if ( isset( $values['icon'] ) ) {
 			update_post_meta( $setting->post_id, '_menu_item_icon', sanitize_text_field( $values['icon'] ) );
 		}
