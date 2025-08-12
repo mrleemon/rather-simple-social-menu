@@ -36,7 +36,7 @@
 		// Listen for changes in the hide title checkbox
 		control.hideTitleCheckbox.on('change', function () {
 			setSettingFields(control.setting, {
-				hide_title: this.checked
+				hide_title: this.checked ? '1' : '0'
 			});
 		});
 	}
@@ -66,6 +66,6 @@
 		const value = control.setting();
 
 		control.iconSelect.val(value.icon || '');
-		control.hideTitleCheckbox.prop('checked', !!value.hide_title);
+		control.hideTitleCheckbox.prop('checked', value.hide_title === '1');
 	}
 })();
