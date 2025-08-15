@@ -119,7 +119,7 @@ class Rather_Simple_Social_Menu {
 	<p class="field-icon description description-wide">
 		<label for="edit-menu-item-icon-<?php echo $item_id; ?>">
 		<?php _e( 'Icon', 'rather-simple-social-menu' ); ?><br />
-			<select name="menu-item-icon[<?php echo $item_id; ?>]" id="edit-menu-item-icon-<?php echo $item_id; ?>">
+			<select name="menu-item-icon[<?php echo $item_id; ?>]" id="edit-menu-item-icon-<?php echo esc_attr( $item_id ); ?>">
 			<option value="" <?php selected( empty( $item->icon ) ); ?>></option>
 		<?php
 		foreach ( array_keys( Plugin_SVG_Icons::$svg_icons ) as $clave ) :
@@ -147,7 +147,7 @@ class Rather_Simple_Social_Menu {
 	public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id ) {
 		if ( isset( $_POST['menu-item-icon'] ) && is_array( $_POST['menu-item-icon'] ) ) {
 			if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
-				$icon = $_POST['menu-item-icon'][ $menu_item_db_id ];
+				$icon = sanitize_text_field( wp_unslash( $_POST['menu-item-icon'][ $menu_item_db_id ] ) );
 				update_post_meta( $menu_item_db_id, '_menu_item_icon', $icon );
 			} else {
 				delete_post_meta( $menu_item_db_id, '_menu_item_icon' );
